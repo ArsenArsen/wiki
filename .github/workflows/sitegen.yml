@@ -16,7 +16,7 @@ jobs:
       - name: Get deps
         run: |
           set -xe
-          gem install --user-install asciidoctor
+          gem install --user-install asciidoctor tilt
           pip install --user -U Pygments
       - name: Checkout publishing
         uses: actions/checkout@v2
@@ -34,10 +34,13 @@ jobs:
           fetch-depth: 0
           ref: gh-pages
         if: ${{ github.repository != 'osdev-wiki/wiki' }}
-      - name: Cache stack
-        uses: freckle/stack-cache-action@09a5fa43f7a720659ee8489a270837ed40ccc869
+      - name: Cache stack-work and stack-root
+        uses: actions/cache@v2
         with:
-          working-directory: wiki/generator
+          path: |
+            ~/.stack
+            wiki/generator/.stack-work/
+          key: ${{ runner.os }}-${{ matrix.ghc }}
       - name: Clean _out
         run: |
           cd _out
@@ -51,7 +54,7 @@ jobs:
           cd wiki/generator
           stack run --cwd .. -- build
           cd ..
-          mv -T _out ../_site
+          mv -T _site ../_out
       - name: Publish
         run: |
           set -xe
