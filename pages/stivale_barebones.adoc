@@ -1,18 +1,21 @@
+---
+tags: tutorial, kernel, barebones
+category: Tutorial
+description: A tutorial on how to write a minimal kernel using a stivale2-compliant bootloader.
+---
 = Stivale Barebones
-:description: A tutorial on how to write a minimal kernel using a stivale2-compliant bootloader.
-:keywords: tutorial, kernel, barebones
-:page-category: Tutorial
 :source-language: c
 
 == Introduction
 
 === What is stivale?
+This article will demonstrate how to write a small 64-bit higher-half
+xref:stivale[stivale2] kernel in (GNU) C, and boot it using the
+xref:limine.adoc[Limine] bootloader.
 
-include::partial$stivale.adoc[]
-
-This article will demonstrate how to write a small 64-bit higher-half stivale2 kernel in (GNU) C, and boot it using the xref:limine.adoc[] bootloader.
-
-It is also recommended to check out https://github.com/limine-bootloader/limine-barebones[this] project as it provides example buildable code to go along with this tutorial.
+It is also recommended to check out
+https://github.com/limine-bootloader/limine-barebones[this] project as it
+provides example buildable code to go along with this tutorial.
 
 == Tutorial
 
@@ -26,7 +29,7 @@ As one may notice, there is no "entry point" assembly stub, as one is not necess
 
 Furthermore, we will download the header file `stivale2.h` which defines structures that we will use to interact with the bootloader from https://raw.githubusercontent.com/stivale/stivale/master/stivale2.h[here], and place it in the same directory as the other files.
 
-Obviously, this is just a bare bones example, and one should always refer to the https://github.com/stivale/stivale/blob/master/STIVALE2.md[[stivale2 specification] for more details and information.
+Obviously, this is just a bare bones example, and one should always refer to the https://github.com/stivale/stivale/blob/master/STIVALE2.md[stivale2 specification] for more details and information.
 
 This is the kernel "main".
 
@@ -281,27 +284,27 @@ INTERNALLDFLAGS :=             \
     -static
 
 # Use find to glob all *.c files in the directory and extract the object names.
-CFILES := $(shell find ./ -type f -name '*.c')
-OBJ := $(CFILES:.c=.o)
-HEADER_DEPS := $(CFILES:.c=.d)
+CFILES := $$(shell find ./ -type f -name '*.c')
+OBJ := $$(CFILES:.c=.o)
+HEADER_DEPS := $$(CFILES:.c=.d)
 
 # Default target.
 .PHONY: all
-all: $(KERNEL)
+all: $$(KERNEL)
 
 # Link rules for the final kernel executable.
-$(KERNEL): $(OBJ)
-    $(LD) $(OBJ) $(LDFLAGS) $(INTERNALLDFLAGS) -o $@
+$$(KERNEL): $$(OBJ)
+    $$(LD) $$(OBJ) $$(LDFLAGS) $$(INTERNALLDFLAGS) -o $$@
 
 # Compilation rules for *.c files.
--include $(HEADER_DEPS)
+-include $$(HEADER_DEPS)
 %.o: %.c
-    $(CC) $(CFLAGS) $(INTERNALCFLAGS) -c $< -o $@
+    $$(CC) $$(CFLAGS) $$(INTERNALCFLAGS) -c $$< -o $$@
 
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
-    rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS)
+    rm -rf $$(KERNEL) $$(OBJ) $$(HEADER_DEPS)
 ----
 
 ==== limine.cfg
@@ -395,14 +398,14 @@ make -C limine
 ./limine/limine-install image.hdd
 
 # Mount the loopback device.
-USED_LOOPBACK=$(sudo losetup -Pf --show image.hdd)
+USED_LOOPBACK=$$(sudo losetup -Pf --show image.hdd)
 
 # Format the ESP partition as FAT32.
-sudo mkfs.fat -F 32 ${USED_LOOPBACK}p1
+sudo mkfs.fat -F 32 $${USED_LOOPBACK}p1
 
 # Mount the partition itself.
 mkdir -p img_mount
-sudo mount ${USED_LOOPBACK}p1 img_mount
+sudo mount $${USED_LOOPBACK}p1 img_mount
 
 # Copy the relevant files over.
 sudo mkdir -p img_mount/EFI/BOOT
@@ -412,7 +415,7 @@ sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 # Sync system cache and unmount partition and loopback device.
 sync
 sudo umount img_mount
-sudo losetup -d ${USED_LOOPBACK}
+sudo losetup -d $${USED_LOOPBACK}
 ----
 
 == Conclusion

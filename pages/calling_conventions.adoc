@@ -1,7 +1,9 @@
+---
+tags: assembly, x86, x64, sysv, msvc
+category: Assembly
+description: Examples of calling conventions on common platforms.
+---
 = Calling Conventions
-:description: Examples of calling conventions on common platforms
-:keywords: assembly, x86, x64, sysv, msvc
-:page-category: Assembly
 :source-language: c
 
 == What are calling conventions?

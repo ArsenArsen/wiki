@@ -1,0 +1,17 @@
+<div id="toc" class="intentionallyEmpty"></div>
+<div id="contenttop"></div>
+<article>
+	<h2>$title$</h2>
+	$if(tagDescription)$
+	$tagDescription$
+	$endif$
+<ul class="pageList">
+$for(pages)$
+<li>
+	<a href="$url$" class="listSlug">/pages/$title$</a>
+	<br>
+	$description$
+</li>
+$endfor$
+</ul>
+</article>

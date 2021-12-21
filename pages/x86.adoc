@@ -1,7 +1,9 @@
+---
+tags: x86, architecture
+category: x86
+description: Description and brief history of the x86 CPU architecture.
+---
 = x86
-:description: Description and brief history of the x86 CPU architecture
-:keywords: x86, architecture
-:page-category: x86
 
 == Overview
 x86 is a complex-instruction-set, little-endian, 32-bit/64-bit instruction set architecture (ISA) introduced in 1985 by Intelfootnote:[https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html]. It was preceded by the Intel 8086 architecture, a 16-bit CPU architecture from 1978.
