@@ -54,7 +54,7 @@ jobs:
           cd wiki/generator
           stack run --cwd .. -- build
           cd ..
-          rsync -a _site ../_out
+          rsync -a _site/ ../_out
       - name: Publish
         run: |
           set -xe
