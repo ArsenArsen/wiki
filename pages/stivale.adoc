@@ -1,9 +1,9 @@
 ---
+title: Stivale
 tags: protocols, boot
 category: Bootloaders
 description: Brief introduction to the Stivale boot protocol.
 ---
-= Stivale
 
 *stivale* means "boot" in Italian.
 It is a boot protocol designed to overcome shortcomings of common boot

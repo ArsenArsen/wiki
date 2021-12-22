@@ -1,9 +1,9 @@
 ---
+title: Visual Studio
 tags: compiler, msvc, toolchain
 category: Toolchain
 description: How to use Visual Studio, with either MSVC or clang for OS development.
 ---
-= Visual Studio
 
 This page describes how to use Visual Studio as an IDE and build system for OS development. It is recommended that you use the clang toolchain, but using Microsoft's native MSVC compiler is possible as well.
 

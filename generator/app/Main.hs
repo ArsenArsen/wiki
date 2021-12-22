@@ -35,10 +35,13 @@ itemCompiler :: Compiler (Item String)
 itemCompiler = do
     ext <- getUnderlyingExtension
     if ext == ".adoc" then
-        getResourceBody >>= withItemBody adoctor
+        getResourceBody
+            >>= loadAndApplyTemplate adocInputTemplate defaultContext
+            >>= withItemBody adoctor
     else
         pandocCompiler
     where adoctor = unixFilter "asciidoctor" asciidoctorOptions
+          adocInputTemplate = "adoc/adoctor_input_template.adoc"
 
 noCategoryError :: String -> Compiler a
 noCategoryError x = fail $ "Category " ++ x ++ " does not exist."
@@ -101,6 +104,8 @@ main = do
                                                    ]
 
         match "html/*" $ compile templateCompiler
+        match "adoc/*.adoc" $ compile templateCompiler
+
         match "css/*" $ compile compressCssCompiler
         match "static/*" $ do
             route $ customRoute (\i -> "_/" ++ (toFilePath i))
@@ -132,7 +137,7 @@ main = do
             route $ setExtension "html"
             compile $ getResourceBody
                 >>= applyAsTemplate genericContext
-                >> itemCompiler
+                >>  itemCompiler
                 >>= loadAndApplyTemplate "html/wrapper.html" genericContext
                 >>= relativizeUrls
 

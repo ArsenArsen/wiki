@@ -1,9 +1,9 @@
 ---
+title: clang Cross-Compiler
 tags: compiler, clang, tutorial
 category: Tutorial
 description: Tutorial on how to setup cross-compilation for OS development using clang.
 ---
-= clang Cross-Compiler
 
 == Introduction
 

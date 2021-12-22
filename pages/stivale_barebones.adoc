@@ -1,9 +1,9 @@
 ---
+title: Stivale Barebones
 tags: tutorial, kernel, barebones
 category: Tutorial
 description: A tutorial on how to write a minimal kernel using a stivale2-compliant bootloader.
 ---
-= Stivale Barebones
 :source-language: c
 
 == Introduction
