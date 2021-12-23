@@ -13,11 +13,6 @@ jobs:
         with:
           fetch-depth: 0
           path: wiki
-      - name: Get deps
-        run: |
-          set -xe
-          gem install --user-install asciidoctor tilt
-          pip install --user -U Pygments
       - name: Checkout publishing
         uses: actions/checkout@v2
         with:
@@ -33,14 +28,24 @@ jobs:
           token: "${{ github.token }}"
           fetch-depth: 0
           ref: gh-pages
-        if: ${{ github.repository != 'osdev-wiki/wiki' }}
+      - name: Get deps
+        run: |
+          set -xe
+          gem install --user-install asciidoctor tilt
+          pip install --user -U Pygments
+          cargo install --locked stork-search
       - name: Cache stack-work and stack-root
         uses: actions/cache@v2
         with:
           path: |
             ~/.stack
             wiki/generator/.stack-work/
-          key: ${{ runner.os }}-${{ matrix.ghc }}
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}
+        if: ${{ github.repository != 'osdev-wiki/wiki' }}
       - name: Clean _out
         run: |
           cd _out
@@ -50,7 +55,7 @@ jobs:
       - name: Build site
         run: |
           export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-          export PATH="$GEM_HOME/bin:$HOME/.local/bin:$PATH"
+          export PATH="$GEM_HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
           cd wiki/generator
           stack run --cwd .. -- build
           cd ..

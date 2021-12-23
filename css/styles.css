@@ -10,11 +10,14 @@
 	--blackf: #000;
 	--blue0: #0645ad;
 	--cyan0: hsl(210deg, 60%, 65%);
+	--cyan1: hsl(210deg, 60%, 80%);
+	--cyan2: hsl(210deg, 60%, 30%);
 
 	--foreground: var(--white0);
 	--foreground-hc: var(--whitef);
 	--background: var(--black0);
 	--background-code: var(--black1);
+	--background-active: var(--cyan2);
 	--accent: var(--white1);
 	--links: var(--cyan0);
 }
@@ -31,6 +34,7 @@ html, body {
 		--background: var(--white1);
 		--foreground-hc: var(--blackf);
 		--background-code: var(--white0);
+		--background-active: var(--cyan1);
 		--accent: var(--black1);
 		--links: var(--blue0);
 	}

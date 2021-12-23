@@ -10,6 +10,7 @@ import           Data.Time.Calendar (toGregorian)
 import           Data.Yaml (decodeFileEither, prettyPrintParseException)
 import qualified Data.HashMap.Strict as HM
 import qualified Data.Text as T
+import qualified Stork as S
 import           System.Exit (die)
 
 type Categories = HM.HashMap T.Text T.Text
@@ -67,11 +68,10 @@ categoryDescription :: Categories -> String -> Maybe String
 categoryDescription cats cat = T.unpack <$> HM.lookup catText cats
     where catText = T.pack cat
 
-genericContext' :: String -> Integer -> String -> Context String
-genericContext' gitHash year root = constField "year" (show year)
+genericContext' :: String -> Integer -> Context String
+genericContext' gitHash year = constField "year" (show year)
     <> constField "forge" "https://github.com/osdev-wiki/wiki"
     <> constField "hash" gitHash
-    <> constField "root" root
     <> field "description" (doDescriptionField "description")
     <> field "og-description" (doDescriptionField "og-description")
     <> defaultContext
@@ -83,18 +83,22 @@ genericContext' gitHash year root = constField "year" (show year)
                 Nothing -> noResult $ "No description provided (for " ++ x ++ ")"
                 Just d -> return d
 
+hakyllConfig :: Configuration
+hakyllConfig = defaultConfiguration
+    { destinationDirectory = "_site" -- hard code default
+    }
+
 main :: IO ()
 main = do
     gitHash <- fromMaybe "main" <$> lookupEnv "GIT_HASH"
-    root <- fromMaybe "http://localhost/" <$> lookupEnv "GH_PAGES"
     (year, _, _) <- toGregorian <$> utctDay <$> getCurrentTime
     categoryFile' <- decodeFileEither @Categories "categories.yml"
     categories <- case categoryFile' of
         Left e  -> die $ prettyPrintParseException e
         Right c -> return c
 
-    hakyll $ do
-        let genericContext = let gc = genericContext' gitHash year root in
+    hakyllWith hakyllConfig $ do
+        let genericContext = let gc = genericContext' gitHash year in
                              openGraphField "opengraph" gc <> gc
         let templatePath = fromGlob $ ("adoc/html5/*." ++ adocTemplates)
         adocTemplateDep <- makePatternDependency $ templatePath
@@ -140,6 +144,12 @@ main = do
                 >>  itemCompiler
                 >>= loadAndApplyTemplate "html/wrapper.html" genericContext
                 >>= relativizeUrls
+
+        -- index pages with stork
+        create ["searchidx.st"] $ do
+            route idRoute
+            compile $ loadAll "pages/*"
+                >>= (S.render $ destinationDirectory hakyllConfig)
 
         tags <- buildTags "pages/*" (fromCapture "tags/*.html")
         cats <- let fromLowCapture pat x = fromCapture pat (map toLower x) in

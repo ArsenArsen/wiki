@@ -83,3 +83,7 @@ a.listSlug {
 ul.pageList > li {
 	margin: 0.5em 0;
 }
+
+span#roothack {
+	display: none;
+}
