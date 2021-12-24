@@ -68,9 +68,13 @@ categoryDescription :: Categories -> String -> Maybe String
 categoryDescription cats cat = T.unpack <$> HM.lookup catText cats
     where catText = T.pack cat
 
-genericContext' :: String -> Integer -> Context String
-genericContext' gitHash year = constField "year" (show year)
-    <> constField "forge" "https://github.com/osdev-wiki/wiki"
+
+removeField :: String -> Context String
+removeField n = field n (\_ -> noResult $ "Field '"++n++"' removed.")
+
+genericContext' :: String -> Integer -> Maybe String -> Context String
+genericContext' gitHash year forge = constField "year" (show year)
+    <> forgeField
     <> constField "hash" gitHash
     <> field "description" (doDescriptionField "description")
     <> field "og-description" (doDescriptionField "og-description")
@@ -82,6 +86,8 @@ genericContext' gitHash year = constField "year" (show year)
             case descriptionMaybe <|> titleMaybe of
                 Nothing -> noResult $ "No description provided (for " ++ x ++ ")"
                 Just d -> return d
+          forgeField = fromMaybe (removeField "forge")
+                (fmap (constField "forge") forge)
 
 hakyllConfig :: Configuration
 hakyllConfig = defaultConfiguration
@@ -91,6 +97,7 @@ hakyllConfig = defaultConfiguration
 main :: IO ()
 main = do
     gitHash <- fromMaybe "main" <$> lookupEnv "GIT_HASH"
+    wikiForge <- lookupEnv "WIKI_FORGE"
     (year, _, _) <- toGregorian <$> utctDay <$> getCurrentTime
     categoryFile' <- decodeFileEither @Categories "categories.yml"
     categories <- case categoryFile' of
@@ -98,7 +105,7 @@ main = do
         Right c -> return c
 
     hakyllWith hakyllConfig $ do
-        let genericContext = let gc = genericContext' gitHash year in
+        let genericContext = let gc = genericContext' gitHash year wikiForge in
                              openGraphField "opengraph" gc <> gc
         let templatePath = fromGlob $ ("adoc/html5/*." ++ adocTemplates)
         adocTemplateDep <- makePatternDependency $ templatePath
@@ -166,6 +173,7 @@ main = do
                             [ constField "title" title
                             , constField "description" title
                             , listField "pages" genericContext $ return pages
+                            , removeField "forge"
                             , genericContext
                             ] ++ (maybeToList $ descriptionMaybe)
                     makeItem ""
@@ -185,6 +193,7 @@ main = do
                             [ constField "title" title
                             , constField "description" title
                             , tagsField "tags" tagList
+                            , removeField "forge"
                             , genericContext
                             ]
                     renderredList <- renderTagList tagList
