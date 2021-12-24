@@ -44,7 +44,7 @@ jobs:
           set -xe
           gem install --user-install asciidoctor tilt
           pip install --user -U Pygments
-          cargo install --locked stork-search
+          cargo install --force --locked stork-search
         if: ${{ github.repository != 'osdev-wiki/wiki' }}
       - name: Clean _out
         run: |
