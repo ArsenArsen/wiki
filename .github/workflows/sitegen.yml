@@ -28,13 +28,7 @@ jobs:
           token: "${{ github.token }}"
           fetch-depth: 0
           ref: gh-pages
-      - name: Get deps
-        run: |
-          set -xe
-          gem install --user-install asciidoctor tilt
-          pip install --user -U Pygments
-          cargo install --locked stork-search
-      - name: Cache stack-work and stack-root
+      - name: Cache dependency builds
         uses: actions/cache@v2
         with:
           path: |
@@ -45,6 +39,12 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
           key: ${{ runner.os }}
+      - name: Get deps
+        run: |
+          set -xe
+          gem install --user-install asciidoctor tilt
+          pip install --user -U Pygments
+          cargo install --locked stork-search
         if: ${{ github.repository != 'osdev-wiki/wiki' }}
       - name: Clean _out
         run: |
@@ -60,6 +60,8 @@ jobs:
           stack run --cwd .. -- build
           cd ..
           rsync -a _site/ ../_out
+        env:
+          WIKI_FORGE: ${{ format('https://github.com/{0}', github.repository) }}
       - name: Publish
         run: |
           set -xe
