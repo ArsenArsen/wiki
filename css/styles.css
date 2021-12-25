@@ -7,6 +7,7 @@
 	--whitef: #fff;
 	--black0: #111;
 	--black1: #222;
+	--black2: #181818;
 	--blackf: #000;
 	--blue0: #0645ad;
 	--cyan0: hsl(210deg, 60%, 65%);
@@ -20,6 +21,11 @@
 	--background-active: var(--cyan2);
 	--accent: var(--white1);
 	--links: var(--cyan0);
+
+	/* always dark */
+	--dark-foreground: var(--white0);
+	--dark-background: var(--black2);
+	--dark-links: var(--cyan0);
 }
 
 html, body {
@@ -100,14 +106,15 @@ a#forgebtn {
 }
 
 div#navbar, div#toc:not(.intentionallyEmpty) {
-	border-bottom: 2px dashed var(--accent);
+	border-bottom: 2px solid var(--accent);
 }
 
 footer {
-	color: var(--background);
-	background-color: var(--foreground);
-	font-size: 0.85rem;
+	background-color: var(--dark-background);
+	color: var(--dark-foreground);
+	font-size: 0.75rem;
 }
 
-img#logo {
+footer > a {
+	color: var(--dark-links);
 }
