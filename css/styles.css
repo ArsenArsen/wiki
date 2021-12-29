@@ -56,12 +56,14 @@ a {
 }
 
 .listingblock {
+	width: 100%;
 	background-color: var(--background-code);
 	border-radius: 0.3em;
 	border: 1px var(--accent) solid;
 }
 
 .listingblock > .title {
+	width: 100%;
 	font-family: monospace;
 	font-size: 0.9em;
 	padding: 1px 1ch;
@@ -72,6 +74,11 @@ a {
 	content: "$ edit ";
 	text-decoration: italic;
 	opacity: 50%;
+}
+
+.literalblock pre,
+.listingblock > .content > pre {
+	overflow-x: auto;
 }
 
 .listingblock > .content {

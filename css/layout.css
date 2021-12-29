@@ -1,29 +1,31 @@
 /* Copyright (c) 2021 Arsen Arsenovic, CC0 */
 
+* {
+	box-sizing: border-box;
+}
+
 body, html {
 	width: 100%;
 	min-height: 100vh;
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
 }
 
 div#content {
-	box-sizing: border-box;
 	display: grid;
+	grid-template-areas:
+		"header"
+		"sitemap"
+		"toc"
+		"content"
+		"footer";
 	grid-template-rows:
 		min-content
 		min-content
 		min-content
 		1fr
 		min-content;
-	grid-template-columns: minmax(10px, 300px) auto;
-	grid-template-areas:
-		"header		contenttop"
-		"sitemap	content"
-		"toc		content"
-		"filler		content"
-		"footer		footer";
+	grid-template-columns: auto;
 	grid-gap: 10px;
 	min-height: 100vh;
 }
@@ -33,20 +35,22 @@ div#content > * {
 }
 
 div#header {
-	grid-area: header
+	grid-area: header;
 }
 
 div#navbar {
 	grid-area: sitemap;
 }
 
-div#toc {
-	grid-area: toc;
+div#navbar > ul {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	justify-content: space-evenly;
 }
 
-div#contenttop {
-	grid-area: contenttop;
-	text-align: right;
+div#toc {
+	grid-area: toc;
 }
 
 a#forgebtn {
@@ -55,6 +59,7 @@ a#forgebtn {
 }
 
 div#padding {
+	display: none;
 	grid-area: filler;
 }
 
@@ -69,12 +74,6 @@ div#content > footer {
 	text-align: center;
 }
 
-img#logo {
-	box-sizing: border-box;
-	width: 100%;
-	height: 100%;
-}
-
 a.listSlug {
 	font-size: 1.4em;
 	font-family: monospace;
@@ -86,4 +85,25 @@ ul.pageList > li {
 
 span#roothack {
 	display: none;
+}
+
+@media only screen and (min-width: 768px) {
+	div#content {
+		display: grid;
+		grid-template-columns: minmax(50px, 300px) auto;
+		grid-template-areas:
+			"header		contenttop"
+			"sitemap	content"
+			"toc		content"
+			"filler		content"
+			"footer		footer";
+		grid-gap: 10px;
+		min-height: 100vh;
+	}
+
+	div#navbar > ul {
+		display: block;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
 }
