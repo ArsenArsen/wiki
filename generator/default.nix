@@ -19,17 +19,17 @@ let
     # These arguments passed to nixpkgs, include some patches and also
     # the haskell.nix functionality itself as an overlay.
     haskellNix.nixpkgsArgs;
-in pkgs.haskell-nix.project {
-  # 'cleanGit' cleans a source directory based on the files known by git
-  src = pkgs.haskell-nix.haskellLib.cleanSourceWith {
-    src = pkgs.haskell-nix.haskellLib.cleanGit {
-      name = "osdev-wiki";
-      src = ../.;
-    };
-    subDir = "generator";
-  };
 
-  compiler-nix-name = "ghc8107";
-}
+  project =  pkgs.haskell-nix.project {
+    # 'cleanGit' cleans a source directory based on the files known by git
+    src = pkgs.haskell-nix.haskellLib.cleanSourceWith {
+      src = pkgs.haskell-nix.haskellLib.cleanGit {
+        name = "osdev-wiki";
+        src = ../.;
+      };
+      subDir = "generator";
+    };
+  };
+in project.generator.components.exes.generator
 
 # vim: sw=2 et :
