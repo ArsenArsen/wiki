@@ -34,7 +34,7 @@ function hideSearch(searchDiv) {
     inputBox.addEventListener('input', ev => onQueryUpdate(inputBox.value));
 
     /* TODO(arsen): SRI for this, needs upstream support */
-    stork.initialize("https://files.stork-search.net/releases/v1.3.0/stork.wasm")
+    stork.initialize("https://files.stork-search.net/releases/v1.4.0/stork.wasm")
     stork.register("wiki", rootPath + "/searchidx.st", {
         "onQueryUpdate": onQueryUpdate,
         "onResultsHidden": onResultsHidden,
