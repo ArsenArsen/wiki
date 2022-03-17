@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" type="text/css" href="../_/stylesheet.css">
+
+        <title>clang Cross-Compiler - osdev.wiki</title>
+        
+        <meta name="keywords" content="osdev-wiki,osdev,programming,x86">
+        <meta name="description" content="Tutorial on how to setup cross-compilation for OS development using clang.">
+    </head>
+    <body>
+        <span id="roothack" href="../"></span>
+        <div id="content">
+            <svg id="logo" viewBox="0 0 747.13464 126.28621">
+                <use href="../_/static/logo.svg#g623"></use>
+            </svg>
+            <div id="navbar"><ul>
+	<li><a href="../">Main page</a></li>
+	<li><a href="../categories">Category list</a></li>
+	<li><a href="../tags">Tag list</a></li>
+</ul>
+
+<div class="stork-wrapper">
+	<input data-stork="wiki" placeholder="Search..." />
+	<div data-stork="wiki-output"></div>
+</div>
+<!-- vim: set sw=4 et : -->
+</div>
+            <div id="padding"></div>
+            <div id="toc"><ul class="sectlevel1">
+<li><a href="#_introduction">1. Introduction</a></li>
+<li><a href="#_why_is_cross_compilation_necessary">2. Why is cross-compilation necessary?</a></li>
+<li><a href="#_what_is_clang">3. What is clang?</a></li>
+<li><a href="#_targets">4. Targets</a></li>
+<li><a href="#_start">5. Start</a>
+<ul class="sectlevel2">
+<li><a href="#_linux">5.1. Linux</a></li>
+<li><a href="#_windows">5.2. Windows</a></li>
+<li><a href="#_bsd">5.3. *BSD</a></li>
+<li><a href="#_macos">5.4. macOS</a></li>
+</ul>
+</li>
+<li><a href="#_enabling_cross_compilation">6. Enabling cross-compilation</a></li>
+</ul></div>
+<article>
+<h1 class="sect0">clang Cross-Compiler</h1>
+
+<div class="sect1">
+<h2 id="_introduction">1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A <a href="https://en.wikipedia.org/wiki/Cross_compiler">cross compiler</a> is a compiler that runs on platform A (the <strong>host</strong>), but generates executable code for platform B (the <strong>target</strong>). The platforms do not need to but usually differ in CPU architecture, library environment, <a href="../pages/calling_conventions.html">ABI</a>, and/or <a href="../pages/executable_format.html">executable format</a>. For operating system development, the host is our development system, and the target is the developed OS. It is important to realize that these two platforms are not the same: the developed OS will always differ from the development OS. Thus it is necessary to use a cross compiler to avoid various troubles down the road.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_is_cross_compilation_necessary">2. Why is cross-compilation necessary?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unless development is being done on your developed OS, a cross compiler is necessary. The compiler must know the correct target platform, otherwise there will be issues, if not now then later. If the system compiler is used, it will not know that it is not targeting your host OS: it compiling something else entirely. Some tutorials suggest using the system compiler, and passing it several options to tell it that it’s not targetting the host. This is not sustainable in the long run and the real solution is to use a cross-compiler. Further argumentation for using a cross compiler, if this wasn’t convincing enough, can be found in the article <a href="../pages/why_cross_compile.html">/pages/why_cross_compile.html</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_clang">3. What is clang?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As an operating system developer in the 2020s, <a href="../pages/time_travel.html">newer technologies</a> have been developed that not only simplify the development process, but are of higher quality and are more powerful than what was used before. One of these technologies is <a href="https://llvm.org">LLVM</a>. Most osdev guides, including the original <a href="https://wiki.osdev.org">osdev.org wiki</a> instruct the developer to use GCC. Using LLVM+clang makes the life of an OS developer easier at the beginning, because unlike GCC, this compiler was designed to cross-compile from the very beginning, and thus it is not neccessary to build an entire toolchain from scratch for each desired target platform. It is also the native compiler on BSD and Mac OS X systems. The error messages are more accurate and informational. The main drawbacks is that when adding support for your custom platform is slower, as LLVM is much larger and slower to compile. GCC also compiles code faster. Ultimately, the compiler you use doesn’t matter too much.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_targets">4. Targets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cross compilation is done using a <a href="../pages/target_triplet.html">/pages/target_triplet.html</a>, which conveys information to the compiler about the platform that is being compiled to.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_start">5. Start</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Install clang on the host system. It is the standard compiler on BSD-like systems, and virtually all Linux distributions have clang packaged in their software repositories. There is an installer for Windows.</p>
+</div>
+<div class="sect2">
+<h3 id="_linux">5.1. Linux</h3>
+<div class="paragraph">
+<p>Install clang through the distribution package manager:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ubuntu-based: <code># apt install clang</code></p>
+</li>
+<li>
+<p>Arch-based: <code># pacman -S clang</code></p>
+</li>
+<li>
+<p>Fedora: <code># dnf install clang</code></p>
+</li>
+<li>
+<p>Gentoo: <code># emerge -a clang</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Be sure to enable the target architecture(s) in the LLVM_TARGETS variable in /etc/portage/make.conf</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Alpine: <code># apk add clang</code></p>
+</li>
+<li>
+<p>Others: It is highly unlikely the distribution does not provide clang packaged. Search the repositories.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the case that clang isn’t packaged, it can be built from source.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_windows">5.2. Windows</h3>
+<div class="paragraph">
+<p>If <a href="../pages/visual_studio.html">Visual Studio</a> with the "Desktop Development with C++" toolset is installed, clang can be installed as an individual component through the Visual Studio Installer. See <a href="https://docs.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170">Clang/LLVM support in Visual Studio</a>.as</p>
+</div>
+<div class="paragraph">
+<p>If Visual Studio is not desired or installed, the latest release of clang can be installed from the <a href="https://github.com/llvm/llvm-project/releases">LLVM GitHub release page</a>.</p>
+</div>
+<div class="paragraph">
+<p>TODO: Windows</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bsd">5.3. *BSD</h3>
+<div class="paragraph">
+<p>Clang is the default compiler for OpenBSD, NetBSD and FreeBSD, so it should be pre-installed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_macos">5.4. macOS</h3>
+<div class="paragraph">
+<p>The built-in apple clang comes crippled: it only ships with x86_64 and arm64 support (but still supports ELF). It is recommended to get clang from <a href="https://brew.sh">homebrew</a>, as the LLVM linker (lld) is needed to get anything meaningful done either way. It is also worth noting that proper cross-compilation GCC tools are also in the homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_enabling_cross_compilation">6. Enabling cross-compilation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+</article>
+
+            <footer>
+                &copy; 2021 osdev.wiki contributors. All contents released under
+                the Creative Commons Zero license. Icons (marked with class
+                <code>bi</code>) provided by
+                <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                under the MIT license.
+                Search provided by
+                <a href="https://stork-search.net/">Stork</a> under the
+                Apache-2.0 license.
+                <a href="https://github.com/ArsenArsen/wiki/tree/main/">Source code</a>.
+            </footer>
+        </div>
+        <script src="https://files.stork-search.net/releases/v1.4.0/stork.js" integrity="sha512-aWKhPNaS3Dw47qzN1e1oxmqW0LofAvNpvrLFPb+DISgrfQPdkn5bmqaVnPyyPK5o69v9z1alQhU9yEvUcgp9Cg==" crossorigin="anonymous"></script>
+        <script src="../_/static/search.js"></script>
+    </body>
+</html>
+<!-- vim: set sw=4 et : -->

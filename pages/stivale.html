@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" type="text/css" href="../_/stylesheet.css">
+
+        <title>Stivale - osdev.wiki</title>
+        
+        <meta name="keywords" content="osdev-wiki,osdev,programming,x86">
+        <meta name="description" content="Brief introduction to the Stivale boot protocol.">
+    </head>
+    <body>
+        <span id="roothack" href="../"></span>
+        <div id="content">
+            <svg id="logo" viewBox="0 0 747.13464 126.28621">
+                <use href="../_/static/logo.svg#g623"></use>
+            </svg>
+            <div id="navbar"><ul>
+	<li><a href="../">Main page</a></li>
+	<li><a href="../categories">Category list</a></li>
+	<li><a href="../tags">Tag list</a></li>
+</ul>
+
+<div class="stork-wrapper">
+	<input data-stork="wiki" placeholder="Search..." />
+	<div data-stork="wiki-output"></div>
+</div>
+<!-- vim: set sw=4 et : -->
+</div>
+            <div id="padding"></div>
+            <div id="toc"></div>
+<article>
+<h1 class="sect0">Stivale</h1>
+
+<div class="paragraph">
+<p><strong>stivale</strong> means "boot" in Italian.
+It is a boot protocol designed to overcome shortcomings of common boot
+protocols used by hobbyist OS developers, such as
+<a href="../pages/multiboot.html">Multiboot</a>.</p>
+</div>
+<div class="paragraph">
+<p>There are actually 2 revisions of the stivale boot protocol, namely:
+<strong>stivale</strong>, and <strong>stivale2</strong>. The earlier stivale revision (simply "stivale",
+but for clarity we are going to call it "stivale1" from now on), is a very
+simple <a href="https://en.wikipedia.org/wiki/KISS_principle">"KISS"</a> boot protocol
+only supporting what was deemed necessary at the time, but versioning and
+expandability issues made creating stivale2 a necessity. stivale2 makes use
+of tags for bootloader writers' and kernel writers' convenience, and to make
+future expandability and revisioning easier.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+stivale1 is deprecated and should be avoided for new kernels.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>stivale is firmware and architecture agnostic, though the only
+bootloader fully supporting the stivale protocols as of writing
+this article (2021/01/09) is <a href="../pages/limine.html">/pages/limine.html</a>, which is an
+x86/x86_64 <a href="../pages/bios.html">/pages/bios.html</a> and <a href="../pages/uefi.html">/pages/uefi.html</a> bootloader, with
+<a href="https://github.com/TomatOrg/TomatBoot">TomatBoot</a> (now archived) and
+<a href="https://github.com/FlorenceOS/Sabaton">Sabaton</a> offering limited stivale
+compliance for <a href="../pages/uefi.html#x86">x86_64 UEFI</a> exclusively, and
+<a href="../pages/arm.html#AArch64">aarch64</a>, respectively.</p>
+</div>
+</article>
+
+            <footer>
+                &copy; 2021 osdev.wiki contributors. All contents released under
+                the Creative Commons Zero license. Icons (marked with class
+                <code>bi</code>) provided by
+                <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                under the MIT license.
+                Search provided by
+                <a href="https://stork-search.net/">Stork</a> under the
+                Apache-2.0 license.
+                <a href="https://github.com/ArsenArsen/wiki/tree/main/">Source code</a>.
+            </footer>
+        </div>
+        <script src="https://files.stork-search.net/releases/v1.4.0/stork.js" integrity="sha512-aWKhPNaS3Dw47qzN1e1oxmqW0LofAvNpvrLFPb+DISgrfQPdkn5bmqaVnPyyPK5o69v9z1alQhU9yEvUcgp9Cg==" crossorigin="anonymous"></script>
+        <script src="../_/static/search.js"></script>
+    </body>
+</html>
+<!-- vim: set sw=4 et : -->
