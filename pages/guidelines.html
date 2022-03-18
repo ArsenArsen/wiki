@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" type="text/css" href="../_/stylesheet.css">
+
+        <title>Style guidelines - osdev.wiki</title>
+        
+        <meta name="keywords" content="osdev-wiki,osdev,programming,x86">
+        <meta name="description" content="An overview of wiki tone, source code style, and more">
+    </head>
+    <body>
+        <span id="roothack" href="../"></span>
+        <div id="content">
+            <svg id="logo" viewBox="0 0 747.13464 126.28621">
+                <use href="../_/static/logo.svg#g623"></use>
+            </svg>
+            <div id="navbar"><ul>
+	<li><a href="../">Main page</a></li>
+	<li><a href="../categories">Category list</a></li>
+	<li><a href="../tags">Tag list</a></li>
+</ul>
+
+<div class="stork-wrapper">
+	<input data-stork="wiki" placeholder="Search..." />
+	<div data-stork="wiki-output"></div>
+</div>
+<!-- vim: set sw=4 et : -->
+</div>
+            <div id="padding"></div>
+            <div id="toc"><ul class="sectlevel1">
+<li><a href="#_content_guide">1. Content guide</a></li>
+<li><a href="#_asciidoc_and_source_code_style">2. AsciiDoc and source code style</a>
+<ul class="sectlevel2">
+<li><a href="#_asciidoc_formatting_guidelines">2.1. AsciiDoc formatting guidelines</a></li>
+<li><a href="#_c_source_code_formatting">2.2. C source code formatting</a></li>
+</ul>
+</li>
+<li><a href="#_hard_rules">3. Hard rules</a></li>
+</ul></div>
+<article>
+<h1 class="sect0">Style guidelines</h1>
+
+<div class="sect1">
+<h2 id="_content_guide">1. Content guide</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The style guide will always leave some leeway, since there is no single best
+way of doing something, but the overall style should be consistent <em>within</em>
+an article and may be different <em>across</em> articles.
+This also means one should keep the current style when expanding an article.
+An article’s style should only be changed when there is good reason to.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Inconsistent styling within an article might cause confusion to the
+      reader, however imposing one arbitrary decision across the entire wiki
+      will be cumbersome and will be of limited use.
+In addition, different topics may require different treatment.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>An article should be structured as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Warning templates</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This is the first thing any reader should see
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Lead section (a short, self-contained overview of the topic)</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+A reader should be able to get a quick overview of the topic without
+      reading a long text.
+A person encountering the article should be able to assess quickly, if they
+are interested in reading it further or not.
+The lead section is also the part displayed in search engines and social media
+embeds.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Main matter</p>
+</li>
+<li>
+<p>See also (internal links to tangentially related topics that might be of
+interest to the reader, in order to facilitate navigation)</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The reader will be able to easily find articles they want to read next.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Further reading (external links, books, etc …​, such as tutorials,
+references, and documentation, that might be of interest to someone writing
+an OS)</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The wiki cannot and should not cover everything, it serves as a starting
+      point for further research.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>References (list of inline citations that appear as footnotes throughout the
+article)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>American English spelling and terminology used in technical literature should
+be used when writing articles.
+However, terms that are widely used across all English-speaking countries
+should be preferred over terms used exclusively in the US.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Most technical literature is written in American English.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>An article should be logically divided into sections and subsections.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+It facilitates navigation of long articles.
+      Sections may appear in search engine results.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Article and section titles should be written in sentence case (first letter
+of first word capitalized) and should not contain redundant "the" or "a".
+This means "BIOS", not "The BIOS".
+Exception: proper names.</p>
+</li>
+<li>
+<p>A subsection title should not redundantly contain the title of its parent
+section.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Do not repeat yourself.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Avoid markup in article and section titles.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+They appear in cross-references, tables of contents and search engine
+      results.
+      Use of certain markup may cause unforeseen problems.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Every claim in an article should be sourced, preferably using inline
+footnotes.
+Primary sources (official documentation, references or specifications) should
+be preferred over secondary ones, unless primary sources are not available or
+have errors.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The reader should be able to easily verify the correctness of content.
+      Factual errors and hearsay should also be avoided.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Claims in the lead section must not have an inline citation, if they appear
+in the main matter.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Do not repeat yourself.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Articles should have a neutral point of view.
+They should not prefer a certain solution over another one, when the
+alternative is also widely used (avoid holy wars).
+However, arguments for and against a solution may be presented in an
+objective and sourced way.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If opinions must be included, they must be quoted from a source.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The wiki is not a place for holy wars.
+      Different people have different opinions and there is no objective way to
+      settle all disputes.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Modern methods and solutions should be emphasized over obsolete ones.
+This does not mean that older technologies are not covered.
+However, the reader must always be aware of legacy.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This wiki should focus on modern OS development.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If the title of an article is mentioned in another article, the first mention
+of that title should be linked.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Navigation in any wiki lives from internal links.
+However, articles should not be cluttered with internal links.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If a link to an article exists in the lead section, another link may exist in
+the main matter.</p>
+</li>
+<li>
+<p>An article may be linked more than once within a long article, but not more
+than once within the same section.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The one link guideline should not get in the way of navigability.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Code examples should be small self-contained snippets of code (as a rule of
+thumb, not larger than a screen).
+Articles should not be written as step-by-step tutorials.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+OS development requires a certain level of skill.
+This includes being able to implement code based on a specification.
+Providing large and complete code examples gives novice programmers the
+incentive to simply copy and paste them, without fully understanding them.
+OS development is not a linear process and there are a lot of choices that have
+to be made.
+Tutorials cannot cover the broadness of OS development.
+Large code examples are also harder to test and maintain.
+Buggy code should not be in the wiki.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code examples should be written in C.
+  However, they must not be completely valid source files.
+  For example, functions may be used that are not declared anywhere in the code
+  snippet.
+  Snippets should be vague and generic and should have pseudocode-like
+qualities.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+C is the <em>lingua franca</em> of programming languages and <em>the</em> generic
+      programming language.
+      It is known by most programmers.
+      In addition, it is a simple language that does not contain a lot of
+      features that some programmers might not know.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>An exception to the C rule is low level code that must be written in
+assembly.
+Assembly is architecture-specific and therefore should be used only on
+architecture-specific pages or sections.
+When it comes to x86 assembly, the most convenient syntax (Intel or AT&amp;T) in
+the relevant context should be used.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Articles should be written in proper English with encyclopedic tone.
+A list of common things to look out for is provided.
+No rationale is provided, since these are common rules of English and are
+essentially linguistic conventions.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>General rules, grammar, tone and vocabulary</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Avoid repeating yourself.
+Avoid redundant phrases in sentences.
+Avoid long run-on sentences.
+For example, "OS development requires a certain level of skill" is preferred
+over "OS development requires the programmer to have a certain level of
+general skill".</p>
+</li>
+<li>
+<p>Articles should be written in encyclopedic tone, this includes <em>never</em> using
+the first or second person ("I", "me", "you"), unless quoting.</p>
+</li>
+<li>
+<p>"The" should never be capitalized mid-sentence, unless it is part of a
+proper name.</p>
+</li>
+<li>
+<p>Plural forms of nouns are formed by using -s or -es, not -'s.</p>
+</li>
+<li>
+<p>Possessive forms of nouns are formed by using -'s.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+"It" is not a noun, but a personal pronoun.
+The corresponding possessive pronoun is "its", not "it’s".
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Use the present tense by default.</p>
+</li>
+<li>
+<p>Avoid contractions like "can’t" or "don’t".</p>
+</li>
+<li>
+<p>Avoid language like "note", "remember" or "obviously", which either address
+the reader directly or makes presumptions about the reader’s knowledge.</p>
+</li>
+<li>
+<p>Use gender-neutral language, avoid the use of "he" or "she".</p>
+</li>
+<li>
+<p>Abbreviations may be used in article or section titles, if they are used
+more commonly than the full expression (for example "BIOS" instead of "Basic
+Input/Output System").</p>
+</li>
+<li>
+<p>The first occurrence of an abbreviation must be written out, with the
+abbreviation following in parentheses: "Basic Input/Output System (BIOS)".</p>
+</li>
+<li>
+<p>Abbreviations may or may not include full stops, however no spaces may exist
+within the abbreviation ("B.I.O.S." is allowed, but "B. I. O. S." is not).
+However their use must be consistent and must follow conventions set in
+technical literature (use "BIOS", not "B.I.O.S.").</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Punctuation and symbols</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Do not use ampersands (&amp;), use "and", unless quoting or part of a proper
+name like "AT&amp;T".</p>
+</li>
+<li>
+<p>Use boldface to highlight an important term being introduced (such as the
+ first occurrence of the article title), but do not use it more than once for
+ the same term.
+For emphasis and foreign words, use italics.
+Do not italize or boldface nearby punctuation.</p>
+</li>
+<li>
+<p>When quoting a source, the source must be mentioned <em>in the text</em>, in
+addition to having a footnote as references.</p>
+</li>
+<li>
+<p>Straight quotes (") and apostrophes (') should be used (no curly quotes or
+apostrophes, no backticks, no low-high quotes, no guillemet).</p>
+</li>
+<li>
+<p>Nested quotes should use alternating quotes and apostrophes.</p>
+</li>
+<li>
+<p>Quotations should change the original text only minimally, any omitted,
+added, or changed words should be enclosed in square brackets.</p>
+</li>
+<li>
+<p>A comma before a quotation can be omitted, if the sentence is still
+grammatically correct and if the meaning of the quote is not changed.</p>
+</li>
+<li>
+<p>Punctuation may be included inside a quotation, if it makes logical sense
+and the punctuation is present in the original text.
+If isolated fragments of a sentence are quoted, nearby punctuation should
+usually be outside of the quote.</p>
+</li>
+<li>
+<p>An ellipsis consists of three dot characters (…​) without spaces.
+They should be used when content is omitted from quotes.
+Square brackets may be placed around them to indicate that they are not part
+of the original quote.</p>
+</li>
+<li>
+<p>The main text may include side notes or clarifications in parentheses.
+However, the text around the parentheses must still make grammatical and
+logical sense without the content inside the parentheses.</p>
+</li>
+<li>
+<p>Nested parentheses should be avoided.
+Adjacent set of parentheses should also be avoided, the phrases should be
+joined by a comma.
+This means "the BIOS (a type of firmware) (replaced by UEFI)" is not
+allowed, and should be replaced by "the BIOS (a type of interface, replaced
+by UEFI)".</p>
+</li>
+<li>
+<p>Semicolons may be used to join two phrases that could stand as independent
+sentences: "stivale2 can load a kernel in long mode; multiboot cannot".
+Phrases that cannot stand alone may not be joined with a semicolon.</p>
+</li>
+<li>
+<p>Hyphens should be used to link prefixes ("quasi-multipliers") and compound
+modifiers ("well-known").</p>
+</li>
+<li>
+<p>Dashes may be used to punctuate a sentence, in order to indicate that the
+two surrounding phrases indicate a pair.
+They should be used sparingly.</p>
+</li>
+<li>
+<p><em>Never</em> put a space before punctuation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Dates and numbers</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Months and days of week are upper case, while seasons are lower case
+("Monday", "July", "summer").</p>
+</li>
+<li>
+<p>Either use 12-hour ("2:45 pm" or "2:45 p.m.") or 24-hour dates ("14:45").
+Avoid "12 am" and "12 pm", when using the 12-hour format.
+Rather, use "noon" or "midnight".
+The latter is ambiguous, so specify whether it is the beginning or the end
+of the day.
+The 24-hour format has no such ambiguity "0:00" is the beginning of the day
+and "24:00" the end.</p>
+</li>
+<li>
+<p>Dates are either written as "19 December 2021" or "December 19, 2021".
+Numerical dates may be written in the yyyy-mm-dd format: "2021-12-19".</p>
+</li>
+<li>
+<p>When omitting the year write either "19 December" or "December 19".</p>
+</li>
+<li>
+<p>When referring to months, use "December 2021".
+You may use abbreviations like "Dec", if the space is limited.</p>
+</li>
+<li>
+<p>Avoid "#", use "No.", "Nos." or "number".</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>List items should be formatted consistently and follow a certain "schema",
+such as being all complete sentences, sentence fragments or names.
+Mixing of different types of items should not occur.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>It is important to note that these are guidelines.
+They apply in the vast majority of cases, but there may be some rare
+exceptions.
+Exceptions should be introduced with care and with a good rationale.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Not every edge case can be reasonably covered.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asciidoc_and_source_code_style">2. AsciiDoc and source code style</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As much as we strive for clean content, we should strive for clean source code.
+The following guidelines will help ensure future contributors and/or editors of
+the wiki have no problems making changes.</p>
+</div>
+<div class="sect2">
+<h3 id="_asciidoc_formatting_guidelines">2.1. AsciiDoc formatting guidelines</h3>
+<div class="paragraph">
+<p>For an AsciiDoc reference, please see the
+<a href="https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/">AsciiDoc
+Syntax Quick reference</a> as well as the more broad
+<a href="https://docs.asciidoctor.org/asciidoc/latest/">AsciiDoc Language Documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>A useful tool for formatting your AsciiDoc is
+<a href="https://www.nicemice.net/par/"><code>par</code></a>, though as it’s not specific to AsciiDoc,
+it will break formatting elements.
+Use sparingly and explicitly, on ranges of text.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Full stops are line breaks</dt>
+<dd>
+<p>AsciiDoc does not care about line breaks, only paragraph breaks.
+By breaking lines on full stops, we minimize the chance of inducing conflicts
+with future contributors to the same page, but different parts.
+<code>par</code> violates this rule, so it is best to reformat a paragraph, break on
+full stops, and then rejoin lines to fit.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Long lines should be broken</dt>
+<dd>
+<p>Long lines in the source code are hard to read.
+If your AsciiDoc sources include lines longer than 100 columns (including
+leading whitespace, for simplicity sake), hard wrap them.
+Many text editors can do this out of the box for you.</p>
+</dd>
+<dt class="hdlist1">Links to other bits of AsciiDoc should be <code>xref</code>s</dt>
+<dd>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/macros/xref/"><code>xref</code></a> macros
+should be used to connect contents on the wiki.
+For this reason, please be careful when removing sections or IDs, at least
+until stronger verification is introduced.</p>
+</dd>
+<dt class="hdlist1">Referenced sections should always have explicit IDs</dt>
+<dd>
+<p>For the sake of preventing issues induced by cross references, and for the
+sake of clarity, all cross references must be made to explicit anchors.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc">See &lt;&lt;section_1&gt;&gt;.
+
+[#section_1]
+== Section 1</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Leave comments for further editors</dt>
+<dd>
+<p>AsciiDoc supports comments.
+When something is not immediately obvious, or when something is left out, add
+a comment attributed to yourself.
+These should be in the format of <code>// TYPE(author): text</code>.
+<code>TYPE</code> should be <code>TODO</code>, <code>XXX</code>, <code>FIXME</code>, <code>NOTE</code>, etc.
+Please note that comments also tend to go stale, so their overuse is strongly
+advised against.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc">// TODO(arsen): add xref validation
+
+////
+NOTE(steve): This paragraph is quite noteworthy!
+             I should talk about it in more detail.
+////</code></pre>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">Align text elements, use 2-space indent</dt>
+<dd>
+<p>On text elements such as lists, align continuation lines (and in turn
+sentences) to the start of the text on the first line of the element.
+Indentation, for instance when writing definition lists, should be done in
+two space increments.
+We are dealing with text, not code; text is much more dense.</p>
+<div class="paragraph">
+<p>Exception: places where syntax makes it impossible to do otherwise.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc">. This first example demonstrates how to indent continuations.
+  Isn't this lovely?
+
+. This example is wrong.
+Some would even consider it unintuitive.
+
+Indentation::
+  The blank space produced by indenting, often used for clarity of scope
++
+Sadly, to insert a newline above this line, we must lose indentation here as to
+not make this paragraph verbatim.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_c_source_code_formatting">2.2. C source code formatting</h3>
+<div class="paragraph">
+<p>As established, C is the <em>lingua franca</em> of programming, all code that is not
+platform-specific assembly should be written in C, with placeholders for
+platform details (e.g. port I/O).
+Here are a few guidelines on C code:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do not assume a compiler.
+If absolutely necessary, assume the common subset of Clang and GCC.</p>
+<div class="paragraph">
+<p>Exception: compiler-specific pages.</p>
+</div>
+</li>
+<li>
+<p>Format code in the
+<a href="https://en.wikipedia.org/wiki/Indentation_style#Variant:_1TBS_(OTBS)">One True
+Brace Style</a>.</p>
+<div class="paragraph">
+<p>This style is a variant of K&amp;R with optional braces explicitly stated, and
+opening braces of blocks on the same line as their respective statements.
+Crucially, adding a line of code should never result in editing another line
+(e.g. to add a brace) or result in flow that disagrees with indentation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c">/* bad */
+f1(int a, int b, int c)
+{
+  if (a)
+  {
+    return b + c;
+  }
+  else {
+    return a * c;
+  }
+}
+
+/* good */
+int f1(int a, int b, int c) {
+    if (a) {
+      return b + c;
+    } else {
+      return a * c;
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The unit of indentation is four spaces, and alignment is allowed.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="c">int function1(int a, /* carried over for demonstration sake */
+              int b,
+              int c) {
+    /* ... */
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use a <code>snake_case</code> naming convention, with names up to around 16 characters.</p>
+<div class="paragraph">
+<p>While modern compilers <em>are</em> able to handle more, over-verbose function names
+will lead to less readable code on the wiki.
+Since code on the wiki should be considered pseudo-C and incomplete, there
+is no need to worry about function names conflicting, and hence no need to
+introduce namespacing (i.e. <code>whatever_</code> prefixes).</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hard_rules">3. Hard rules</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These rules must not and cannot be broken under any conditions.
+Violations of these rules will not be accepted under any circumstance.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Absolutely no copyright violation.
+By submitting a contribution to this wiki, you irrevocably agree to release
+your contribution under the <a href="../licenses/CC0.txt">CC0 license</a> and certify
+that you have the right to do so.</p>
+</li>
+<li>
+<p>Commit messages must conform with the
+<a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>
+standard.
+However, the meaning of the types <code>feat</code> and <code>fix</code> do not apply.
+Valid types are: <code>content</code>, <code>project</code>, <code>sitegen</code>, […​].
+The type <code>fix</code> must be used when conducting a minor fix that does not change
+the content of pages.
+When using <code>fix</code>, one of the other types must be included as the scope of the
+commit message (in order to indicate what area the fix refers to).
+In addition, commits of the type <code>content</code> should only modify a single
+article.
+The scope must list all articles that have been changed in the commit of type
+<code>content</code>.
+The description of the commit must sumarize all changes; descriptions may not
+be vague (e.g. "updated bios.adoc").</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+</article>
+
+            <footer>
+                &copy; 2021 osdev.wiki contributors. All contents released under
+                the Creative Commons Zero license. Icons (marked with class
+                <code>bi</code>) provided by
+                <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                under the MIT license.
+                Search provided by
+                <a href="https://stork-search.net/">Stork</a> under the
+                Apache-2.0 license.
+                <a href="https://github.com/ArsenArsen/wiki/tree/main/">Source code</a>.
+            </footer>
+        </div>
+        <script src="https://files.stork-search.net/releases/v1.4.0/stork.js" integrity="sha512-aWKhPNaS3Dw47qzN1e1oxmqW0LofAvNpvrLFPb+DISgrfQPdkn5bmqaVnPyyPK5o69v9z1alQhU9yEvUcgp9Cg==" crossorigin="anonymous"></script>
+        <script src="../_/static/search.js"></script>
+    </body>
+</html>
+<!-- vim: set sw=4 et : -->
