@@ -669,10 +669,14 @@ with future contributors to the same page, but different parts.
 full stops, and then rejoin lines to fit.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="asciidoc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><pre><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua.
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat.</code></pre>
+aliquip ex ea commodo consequat.
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </dd>
@@ -696,10 +700,14 @@ until stronger verification is introduced.</p>
 sake of clarity, all cross references must be made to explicit anchors.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="asciidoc">See &lt;&lt;section_1&gt;&gt;.
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><pre><span></span>See &lt;&lt;section_1&gt;&gt;.
 
 [#section_1]
-== Section 1</code></pre>
+== Section 1
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </dd>
@@ -714,12 +722,18 @@ Please note that comments also tend to go stale, so their overuse is strongly
 discouraged.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="asciidoc">// TODO(arsen): add xref validation
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><pre><span></span>// TODO(arsen): add xref validation
 
 ////
 NOTE(steve): This paragraph is quite noteworthy!
              I should talk about it in more detail.
-////</code></pre>
+////
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </dd>
@@ -738,7 +752,17 @@ We are dealing with text, not code; text is much more dense.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="asciidoc">. This first example demonstrates how to indent continuations.
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><pre><span></span>. This first example demonstrates how to indent continuations.
   Isn't this lovely?
 
 . This example is wrong.
@@ -748,7 +772,8 @@ Indentation::
   The blank space produced by indenting, often used for clarity of scope
 +
 Sadly, to insert a newline above this line, we must lose indentation here as to
-not make this paragraph verbatim.</code></pre>
+not make this paragraph verbatim.
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
@@ -781,26 +806,46 @@ Crucially, adding a line of code should never result in editing another line
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">/* bad */
-f1(int a, int b, int c)
-{
-  if (a)
-  {
-    return b + c;
-  }
-  else {
-    return a * c;
-  }
-}
+<pre class="pygments highlight"><code data-lang="c"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><pre><span></span><span class="tok-cm">/* bad */</span><span class="tok-w"></span>
+<span class="tok-n">f1</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">  </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
 
-/* good */
-int f1(int a, int b, int c) {
-    if (a) {
-      return b + c;
-    } else {
-      return a * c;
-    }
-}</code></pre>
+<span class="tok-cm">/* good */</span><span class="tok-w"></span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">f1</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">a</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">      </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-k">else</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">      </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </li>
@@ -808,11 +853,16 @@ int f1(int a, int b, int c) {
 <p>The unit of indentation is four spaces, and alignment is allowed.</p>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">int function1(int a, /* carried over for demonstration sake */
-              int b,
-              int c) {
-    /* ... */
-}</code></pre>
+<pre class="pygments highlight"><code data-lang="c"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><pre><span></span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">function1</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">a</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-cm">/* carried over for demonstration sake */</span><span class="tok-w"></span>
+<span class="tok-w">              </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">b</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">              </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">c</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* ... */</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </li>

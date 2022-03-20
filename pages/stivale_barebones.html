@@ -100,138 +100,270 @@ provides example buildable code to go along with this tutorial.</p>
 <div class="listingblock">
 <div class="title">kernel.c</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">#include &lt;stdint.h&gt;
-#include &lt;stddef.h&gt;
-#include &lt;stivale2.h&gt;
+<pre class="pygments highlight"><code data-lang="c"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span></pre></div></td><td class="code"><pre><span></span><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stdint.h&gt;</span><span class="tok-cp"></span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stddef.h&gt;</span><span class="tok-cp"></span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;stivale2.h&gt;</span><span class="tok-cp"></span>
 
-// We need to tell the stivale bootloader where we want our stack to be.
-// We are going to allocate our stack as an array in .bss.
-static uint8_t stack[8192];
+<span class="tok-c1">// We need to tell the stivale bootloader where we want our stack to be.</span>
+<span class="tok-c1">// We are going to allocate our stack as an array in .bss.</span>
+<span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-kt">uint8_t</span><span class="tok-w"> </span><span class="tok-n">stack</span><span class="tok-p">[</span><span class="tok-mi">8192</span><span class="tok-p">];</span><span class="tok-w"></span>
 
-// stivale2 uses a linked list of tags for both communicating TO the
-// bootloader, or receiving info FROM it. More information about these tags
-// is found in the stivale2 specification.
+<span class="tok-c1">// stivale2 uses a linked list of tags for both communicating TO the</span>
+<span class="tok-c1">// bootloader, or receiving info FROM it. More information about these tags</span>
+<span class="tok-c1">// is found in the stivale2 specification.</span>
 
-// stivale2 offers a runtime terminal service which can be ditched at any
-// time, but it provides an easy way to print out to graphical terminal,
-// especially during early boot.
-// Read the notes about the requirements for using this feature below this
-// code block.
-static struct stivale2_header_tag_terminal terminal_hdr_tag = {
-    // All tags need to begin with an identifier and a pointer to the next tag.
-    .tag = {
-        // Identification constant defined in stivale2.h and the specification.
-        .identifier = STIVALE2_HEADER_TAG_TERMINAL_ID,
-        // If next is 0, it marks the end of the linked list of header tags.
-        .next = 0
-    },
-    // The terminal header tag possesses a flags field, leave it as 0 for now
-    // as it is unused.
-    .flags = 0
-};
+<span class="tok-c1">// stivale2 offers a runtime terminal service which can be ditched at any</span>
+<span class="tok-c1">// time, but it provides an easy way to print out to graphical terminal,</span>
+<span class="tok-c1">// especially during early boot.</span>
+<span class="tok-c1">// Read the notes about the requirements for using this feature below this</span>
+<span class="tok-c1">// code block.</span>
+<span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_header_tag_terminal</span><span class="tok-w"> </span><span class="tok-n">terminal_hdr_tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// All tags need to begin with an identifier and a pointer to the next tag.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// Identification constant defined in stivale2.h and the specification.</span>
+<span class="tok-w">        </span><span class="tok-p">.</span><span class="tok-n">identifier</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">STIVALE2_HEADER_TAG_TERMINAL_ID</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// If next is 0, it marks the end of the linked list of header tags.</span>
+<span class="tok-w">        </span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">},</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// The terminal header tag possesses a flags field, leave it as 0 for now</span>
+<span class="tok-w">    </span><span class="tok-c1">// as it is unused.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">flags</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"></span>
+<span class="tok-p">};</span><span class="tok-w"></span>
 
-// We are now going to define a framebuffer header tag.
-// This tag tells the bootloader that we want a graphical framebuffer instead
-// of a CGA-compatible text mode. Omitting this tag will make the bootloader
-// default to text mode, if available.
-static struct stivale2_header_tag_framebuffer framebuffer_hdr_tag = {
-    // Same as above.
-    .tag = {
-        .identifier = STIVALE2_HEADER_TAG_FRAMEBUFFER_ID,
-        // Instead of 0, we now point to the previous header tag. The order in
-        // which header tags are linked does not matter.
-        .next = (uint64_t)&amp;terminal_hdr_tag
-    },
-    // We set all the framebuffer specifics to 0 as we want the bootloader
-    // to pick the best it can.
-    .framebuffer_width  = 0,
-    .framebuffer_height = 0,
-    .framebuffer_bpp    = 0
-};
+<span class="tok-c1">// We are now going to define a framebuffer header tag.</span>
+<span class="tok-c1">// This tag tells the bootloader that we want a graphical framebuffer instead</span>
+<span class="tok-c1">// of a CGA-compatible text mode. Omitting this tag will make the bootloader</span>
+<span class="tok-c1">// default to text mode, if available.</span>
+<span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_header_tag_framebuffer</span><span class="tok-w"> </span><span class="tok-n">framebuffer_hdr_tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// Same as above.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">.</span><span class="tok-n">identifier</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">STIVALE2_HEADER_TAG_FRAMEBUFFER_ID</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// Instead of 0, we now point to the previous header tag. The order in</span>
+<span class="tok-w">        </span><span class="tok-c1">// which header tags are linked does not matter.</span>
+<span class="tok-w">        </span><span class="tok-p">.</span><span class="tok-n">next</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">uint64_t</span><span class="tok-p">)</span><span class="tok-o">&amp;</span><span class="tok-n">terminal_hdr_tag</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">},</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// We set all the framebuffer specifics to 0 as we want the bootloader</span>
+<span class="tok-w">    </span><span class="tok-c1">// to pick the best it can.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">framebuffer_width</span><span class="tok-w">  </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">framebuffer_height</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">framebuffer_bpp</span><span class="tok-w">    </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-w"></span>
+<span class="tok-p">};</span><span class="tok-w"></span>
 
-// The stivale2 specification says we need to define a "header structure".
-// This structure needs to reside in the .stivale2hdr ELF section in order
-// for the bootloader to find it. We use this __attribute__ directive to
-// tell the compiler to put the following structure in said section.
-__attribute__((section(".stivale2hdr"), used))
-static struct stivale2_header stivale_hdr = {
-    // The entry_point member is used to specify an alternative entry
-    // point that the bootloader should jump to instead of the executable's
-    // ELF entry point. We do not care about that so we leave it zeroed.
-    .entry_point = 0,
-    // Let's tell the bootloader where our stack is.
-    // We need to add the sizeof(stack) since in x86(_64) the stack grows
-    // downwards.
-    .stack = (uintptr_t)stack + sizeof(stack),
-    // Bit 1, if set, causes the bootloader to return to us pointers in the
-    // higher half, which we likely want since this is a higher half kernel.
-    // Bit 2, if set, tells the bootloader to enable protected memory ranges,
-    // that is, to respect the ELF PHDR mandated permissions for the executable's
-    // segments.
-    // Bit 3, if set, enables fully virtual kernel mappings, which we want as
-    // they allow the bootloader to pick whichever *physical* memory address is
-    // available to load the kernel, rather than relying on us telling it where
-    // to load it.
-    // Bit 4 disables a deprecated feature and should always be set.
-    .flags = (1 &lt;&lt; 1) | (1 &lt;&lt; 2) | (1 &lt;&lt; 3) | (1 &lt;&lt; 4),
-    // This header structure is the root of the linked list of header tags and
-    // points to the first one in the linked list.
-    .tags = (uintptr_t)&amp;framebuffer_hdr_tag
-};
+<span class="tok-c1">// The stivale2 specification says we need to define a &quot;header structure&quot;.</span>
+<span class="tok-c1">// This structure needs to reside in the .stivale2hdr ELF section in order</span>
+<span class="tok-c1">// for the bootloader to find it. We use this __attribute__ directive to</span>
+<span class="tok-c1">// tell the compiler to put the following structure in said section.</span>
+<span class="tok-n">__attribute__</span><span class="tok-p">((</span><span class="tok-n">section</span><span class="tok-p">(</span><span class="tok-s">&quot;.stivale2hdr&quot;</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-n">used</span><span class="tok-p">))</span><span class="tok-w"></span>
+<span class="tok-k">static</span><span class="tok-w"> </span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_header</span><span class="tok-w"> </span><span class="tok-n">stivale_hdr</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// The entry_point member is used to specify an alternative entry</span>
+<span class="tok-w">    </span><span class="tok-c1">// point that the bootloader should jump to instead of the executable's</span>
+<span class="tok-w">    </span><span class="tok-c1">// ELF entry point. We do not care about that so we leave it zeroed.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">entry_point</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// Let's tell the bootloader where our stack is.</span>
+<span class="tok-w">    </span><span class="tok-c1">// We need to add the sizeof(stack) since in x86(_64) the stack grows</span>
+<span class="tok-w">    </span><span class="tok-c1">// downwards.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">stack</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">uintptr_t</span><span class="tok-p">)</span><span class="tok-n">stack</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-k">sizeof</span><span class="tok-p">(</span><span class="tok-n">stack</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// Bit 1, if set, causes the bootloader to return to us pointers in the</span>
+<span class="tok-w">    </span><span class="tok-c1">// higher half, which we likely want since this is a higher half kernel.</span>
+<span class="tok-w">    </span><span class="tok-c1">// Bit 2, if set, tells the bootloader to enable protected memory ranges,</span>
+<span class="tok-w">    </span><span class="tok-c1">// that is, to respect the ELF PHDR mandated permissions for the executable's</span>
+<span class="tok-w">    </span><span class="tok-c1">// segments.</span>
+<span class="tok-w">    </span><span class="tok-c1">// Bit 3, if set, enables fully virtual kernel mappings, which we want as</span>
+<span class="tok-w">    </span><span class="tok-c1">// they allow the bootloader to pick whichever *physical* memory address is</span>
+<span class="tok-w">    </span><span class="tok-c1">// available to load the kernel, rather than relying on us telling it where</span>
+<span class="tok-w">    </span><span class="tok-c1">// to load it.</span>
+<span class="tok-w">    </span><span class="tok-c1">// Bit 4 disables a deprecated feature and should always be set.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">flags</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">4</span><span class="tok-p">),</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// This header structure is the root of the linked list of header tags and</span>
+<span class="tok-w">    </span><span class="tok-c1">// points to the first one in the linked list.</span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-n">tags</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">uintptr_t</span><span class="tok-p">)</span><span class="tok-o">&amp;</span><span class="tok-n">framebuffer_hdr_tag</span><span class="tok-w"></span>
+<span class="tok-p">};</span><span class="tok-w"></span>
 
-// We will now write a helper function which will allow us to scan for tags
-// that we want FROM the bootloader (structure tags).
-void *stivale2_get_tag(struct stivale2_struct *stivale2_struct, uint64_t id) {
-    struct stivale2_tag *current_tag = (void *)stivale2_struct-&gt;tags;
-    for (;;) {
-        // If the tag pointer is NULL (end of linked list), we did not find
-        // the tag. Return NULL to signal this.
-        if (current_tag == NULL) {
-            return NULL;
-        }
+<span class="tok-c1">// We will now write a helper function which will allow us to scan for tags</span>
+<span class="tok-c1">// that we want FROM the bootloader (structure tags).</span>
+<span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-nf">stivale2_get_tag</span><span class="tok-p">(</span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_struct</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">stivale2_struct</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">uint64_t</span><span class="tok-w"> </span><span class="tok-n">id</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_tag</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">current_tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-n">stivale2_struct</span><span class="tok-o">-&gt;</span><span class="tok-n">tags</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(;;)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// If the tag pointer is NULL (end of linked list), we did not find</span>
+<span class="tok-w">        </span><span class="tok-c1">// the tag. Return NULL to signal this.</span>
+<span class="tok-w">        </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">current_tag</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
 
-        // Check whether the identifier matches. If it does, return a pointer
-        // to the matching tag.
-        if (current_tag-&gt;identifier == id) {
-            return current_tag;
-        }
+<span class="tok-w">        </span><span class="tok-c1">// Check whether the identifier matches. If it does, return a pointer</span>
+<span class="tok-w">        </span><span class="tok-c1">// to the matching tag.</span>
+<span class="tok-w">        </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">current_tag</span><span class="tok-o">-&gt;</span><span class="tok-n">identifier</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-n">id</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">current_tag</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
 
-        // Get a pointer to the next tag in the linked list and repeat.
-        current_tag = (void *)current_tag-&gt;next;
-    }
-}
+<span class="tok-w">        </span><span class="tok-c1">// Get a pointer to the next tag in the linked list and repeat.</span>
+<span class="tok-w">        </span><span class="tok-n">current_tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-n">current_tag</span><span class="tok-o">-&gt;</span><span class="tok-n">next</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
 
-// The following will be our kernel's entry point.
-void _start(struct stivale2_struct *stivale2_struct) {
-    // Let's get the terminal structure tag from the bootloader.
-    struct stivale2_struct_tag_terminal *term_str_tag;
-    term_str_tag = stivale2_get_tag(stivale2_struct, STIVALE2_STRUCT_TAG_TERMINAL_ID);
+<span class="tok-c1">// The following will be our kernel's entry point.</span>
+<span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">_start</span><span class="tok-p">(</span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_struct</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">stivale2_struct</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-c1">// Let's get the terminal structure tag from the bootloader.</span>
+<span class="tok-w">    </span><span class="tok-k">struct</span> <span class="tok-nc">stivale2_struct_tag_terminal</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">term_str_tag</span><span class="tok-p">;</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">term_str_tag</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">stivale2_get_tag</span><span class="tok-p">(</span><span class="tok-n">stivale2_struct</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">STIVALE2_STRUCT_TAG_TERMINAL_ID</span><span class="tok-p">);</span><span class="tok-w"></span>
 
-    // Check if the tag was actually found.
-    if (term_str_tag == NULL) {
-        // It wasn't found, just hang...
-        for (;;) {
-            asm ("hlt");
-        }
-    }
+<span class="tok-w">    </span><span class="tok-c1">// Check if the tag was actually found.</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">term_str_tag</span><span class="tok-w"> </span><span class="tok-o">==</span><span class="tok-w"> </span><span class="tok-nb">NULL</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-c1">// It wasn't found, just hang...</span>
+<span class="tok-w">        </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(;;)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">            </span><span class="tok-k">asm</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-s">&quot;hlt&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
 
-    // Let's get the address of the terminal write function.
-    void *term_write_ptr = (void *)term_str_tag-&gt;term_write;
+<span class="tok-w">    </span><span class="tok-c1">// Let's get the address of the terminal write function.</span>
+<span class="tok-w">    </span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">term_write_ptr</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-n">term_str_tag</span><span class="tok-o">-&gt;</span><span class="tok-n">term_write</span><span class="tok-p">;</span><span class="tok-w"></span>
 
-    // Now, let's assign this pointer to a function pointer which
-    // matches the prototype described in the stivale2 specification for
-    // the stivale2_term_write function.
-    void (*term_write)(const char *string, size_t length) = term_write_ptr;
+<span class="tok-w">    </span><span class="tok-c1">// Now, let's assign this pointer to a function pointer which</span>
+<span class="tok-w">    </span><span class="tok-c1">// matches the prototype described in the stivale2 specification for</span>
+<span class="tok-w">    </span><span class="tok-c1">// the stivale2_term_write function.</span>
+<span class="tok-w">    </span><span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-o">*</span><span class="tok-n">term_write</span><span class="tok-p">)(</span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">char</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-n">string</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">size_t</span><span class="tok-w"> </span><span class="tok-n">length</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">term_write_ptr</span><span class="tok-p">;</span><span class="tok-w"></span>
 
-    // We should now be able to call the above function pointer to print out
-    // a simple "Hello World" to screen.
-    term_write("Hello World", 11);
+<span class="tok-w">    </span><span class="tok-c1">// We should now be able to call the above function pointer to print out</span>
+<span class="tok-w">    </span><span class="tok-c1">// a simple &quot;Hello World&quot; to screen.</span>
+<span class="tok-w">    </span><span class="tok-n">term_write</span><span class="tok-p">(</span><span class="tok-s">&quot;Hello World&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">11</span><span class="tok-p">);</span><span class="tok-w"></span>
 
-    // We're done, just hang...
-    for (;;) {
-        asm ("hlt");
-    }
-}</code></pre>
+<span class="tok-w">    </span><span class="tok-c1">// We're done, just hang...</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(;;)</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-k">asm</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-s">&quot;hlt&quot;</span><span class="tok-p">);</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -252,60 +384,114 @@ Using the stivale2 terminal requires that the kernel maintains some state as des
 <div class="listingblock">
 <div class="title">linker.ld</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c">/* Tell the linker that we want an x86_64 ELF64 output file */
-OUTPUT_FORMAT(elf64-x86-64)
-OUTPUT_ARCH(i386:x86-64)
+<pre class="pygments highlight"><code data-lang="c"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><pre><span></span><span class="tok-cm">/* Tell the linker that we want an x86_64 ELF64 output file */</span><span class="tok-w"></span>
+<span class="tok-n">OUTPUT_FORMAT</span><span class="tok-p">(</span><span class="tok-n">elf64</span><span class="tok-o">-</span><span class="tok-n">x86</span><span class="tok-mi">-64</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-n">OUTPUT_ARCH</span><span class="tok-p">(</span><span class="tok-nl">i386</span><span class="tok-p">:</span><span class="tok-n">x86</span><span class="tok-mi">-64</span><span class="tok-p">)</span><span class="tok-w"></span>
 
-/* We want the symbol _start to be our entry point */
-ENTRY(_start)
+<span class="tok-cm">/* We want the symbol _start to be our entry point */</span><span class="tok-w"></span>
+<span class="tok-n">ENTRY</span><span class="tok-p">(</span><span class="tok-n">_start</span><span class="tok-p">)</span><span class="tok-w"></span>
 
-/* Define the program headers we want so the bootloader gives us the right */
-/* MMU permissions */
-PHDRS
-{
-    null    PT_NULL    FLAGS(0) ;                   /* Null segment */
-    text    PT_LOAD    FLAGS((1 &lt;&lt; 0) | (1 &lt;&lt; 2)) ; /* Execute + Read */
-    rodata  PT_LOAD    FLAGS((1 &lt;&lt; 2)) ;            /* Read only */
-    data    PT_LOAD    FLAGS((1 &lt;&lt; 1) | (1 &lt;&lt; 2)) ; /* Write + Read */
-}
+<span class="tok-cm">/* Define the program headers we want so the bootloader gives us the right */</span><span class="tok-w"></span>
+<span class="tok-cm">/* MMU permissions */</span><span class="tok-w"></span>
+<span class="tok-n">PHDRS</span><span class="tok-w"></span>
+<span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">null</span><span class="tok-w">    </span><span class="tok-n">PT_NULL</span><span class="tok-w">    </span><span class="tok-n">FLAGS</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w">                   </span><span class="tok-cm">/* Null segment */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">text</span><span class="tok-w">    </span><span class="tok-n">PT_LOAD</span><span class="tok-w">    </span><span class="tok-n">FLAGS</span><span class="tok-p">((</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-cm">/* Execute + Read */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">rodata</span><span class="tok-w">  </span><span class="tok-n">PT_LOAD</span><span class="tok-w">    </span><span class="tok-n">FLAGS</span><span class="tok-p">((</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w">            </span><span class="tok-cm">/* Read only */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-n">data</span><span class="tok-w">    </span><span class="tok-n">PT_LOAD</span><span class="tok-w">    </span><span class="tok-n">FLAGS</span><span class="tok-p">((</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">1</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">))</span><span class="tok-w"> </span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-cm">/* Write + Read */</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
 
-SECTIONS
-{
-    /* We wanna be placed in the topmost 2GiB of the address space, for optimisations */
-    /* and because that is what the stivale2 spec mandates. */
-    /* Any address in this region will do, but often 0xffffffff80000000 is chosen as */
-    /* that is the beginning of the region. */
-    . = 0xffffffff80000000;
+<span class="tok-n">SECTIONS</span><span class="tok-w"></span>
+<span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* We wanna be placed in the topmost 2GiB of the address space, for optimisations */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* and because that is what the stivale2 spec mandates. */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* Any address in this region will do, but often 0xffffffff80000000 is chosen as */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* that is the beginning of the region. */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mh">0xffffffff80000000</span><span class="tok-p">;</span><span class="tok-w"></span>
 
-    .text : {
-        *(.text*)
-    } :text
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-nl">text</span> <span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">*</span><span class="tok-p">(.</span><span class="tok-n">text</span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-n">text</span><span class="tok-w"></span>
 
-    /* Move to the next memory page for .rodata */
-    . += CONSTANT(MAXPAGESIZE);
+<span class="tok-w">    </span><span class="tok-cm">/* Move to the next memory page for .rodata */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-w"> </span><span class="tok-o">+=</span><span class="tok-w"> </span><span class="tok-n">CONSTANT</span><span class="tok-p">(</span><span class="tok-n">MAXPAGESIZE</span><span class="tok-p">);</span><span class="tok-w"></span>
 
-    /* We place the .stivale2hdr section containing the header in its own section, */
-    /* and we use the KEEP directive on it to make sure it doesn't get discarded. */
-    .stivale2hdr : {
-        KEEP(*(.stivale2hdr))
-    } :rodata
+<span class="tok-w">    </span><span class="tok-cm">/* We place the .stivale2hdr section containing the header in its own section, */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-cm">/* and we use the KEEP directive on it to make sure it doesn't get discarded. */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-nl">stivale2hdr</span> <span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-n">KEEP</span><span class="tok-p">(</span><span class="tok-o">*</span><span class="tok-p">(.</span><span class="tok-n">stivale2hdr</span><span class="tok-p">))</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-n">rodata</span><span class="tok-w"></span>
 
-    .rodata : {
-        *(.rodata*)
-    } :rodata
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-nl">rodata</span> <span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">*</span><span class="tok-p">(.</span><span class="tok-n">rodata</span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-n">rodata</span><span class="tok-w"></span>
 
-    /* Move to the next memory page for .data */
-    . += CONSTANT(MAXPAGESIZE);
+<span class="tok-w">    </span><span class="tok-cm">/* Move to the next memory page for .data */</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-w"> </span><span class="tok-o">+=</span><span class="tok-w"> </span><span class="tok-n">CONSTANT</span><span class="tok-p">(</span><span class="tok-n">MAXPAGESIZE</span><span class="tok-p">);</span><span class="tok-w"></span>
 
-    .data : {
-        *(.data*)
-    } :data
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-nl">data</span> <span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">*</span><span class="tok-p">(.</span><span class="tok-n">data</span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-n">data</span><span class="tok-w"></span>
 
-    .bss : {
-        *(COMMON)
-        *(.bss*)
-    } :data
-}</code></pre>
+<span class="tok-w">    </span><span class="tok-p">.</span><span class="tok-nl">bss</span> <span class="tok-p">:</span><span class="tok-w"> </span><span class="tok-p">{</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">*</span><span class="tok-p">(</span><span class="tok-n">COMMON</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">        </span><span class="tok-o">*</span><span class="tok-p">(.</span><span class="tok-n">bss</span><span class="tok-o">*</span><span class="tok-p">)</span><span class="tok-w"></span>
+<span class="tok-w">    </span><span class="tok-p">}</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-n">data</span><span class="tok-w"></span>
+<span class="tok-p">}</span><span class="tok-w"></span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
@@ -318,70 +504,134 @@ SECTIONS
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="makefile"># This is the name that our final kernel executable will have.
-# Change as needed.
-KERNEL := myos.elf
+<pre class="pygments highlight"><code data-lang="makefile"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><pre><span></span><span class="tok-c"># This is the name that our final kernel executable will have.</span>
+<span class="tok-c"># Change as needed.</span>
+<span class="tok-nv">KERNEL</span> <span class="tok-o">:=</span> myos.elf
 
-# It is highly recommended to use a custom built cross toolchain to build a kernel.
-# We are only using "cc" as a placeholder here. It may work by using
-# the host system's toolchain, but this is not guaranteed.
-CC ?= cc
+<span class="tok-c"># It is highly recommended to use a custom built cross toolchain to build a kernel.</span>
+<span class="tok-c"># We are only using &quot;cc&quot; as a placeholder here. It may work by using</span>
+<span class="tok-c"># the host system's toolchain, but this is not guaranteed.</span>
+<span class="tok-nv">CC</span> <span class="tok-o">?=</span> cc
 
-# Likewise, "ld" here is just a placeholder and your mileage may vary if using the
-# host's "ld".
-LD ?= ld
+<span class="tok-c"># Likewise, &quot;ld&quot; here is just a placeholder and your mileage may vary if using the</span>
+<span class="tok-c"># host's &quot;ld&quot;.</span>
+<span class="tok-nv">LD</span> <span class="tok-o">?=</span> ld
 
-# User controllable CFLAGS.
-CFLAGS ?= -Wall -Wextra -O2 -pipe
+<span class="tok-c"># User controllable CFLAGS.</span>
+<span class="tok-nv">CFLAGS</span> <span class="tok-o">?=</span> -Wall -Wextra -O2 -pipe
 
-# User controllable linker flags. We set none by default.
-LDFLAGS ?=
+<span class="tok-c"># User controllable linker flags. We set none by default.</span>
+<span class="tok-nv">LDFLAGS</span> <span class="tok-o">?=</span>
 
-# Internal C flags that should not be changed by the user.
-INTERNALCFLAGS :=            \
-    -I.                  \
-    -std=gnu11           \
-    -ffreestanding       \
-    -fno-stack-protector \
-    -fno-pic             \
-    -mno-80387           \
-    -mno-mmx             \
-    -mno-3dnow           \
-    -mno-sse             \
-    -mno-sse2            \
-    -mno-red-zone        \
-        -mcmodel=kernel      \
+<span class="tok-c"># Internal C flags that should not be changed by the user.</span>
+<span class="tok-nv">INTERNALCFLAGS</span> <span class="tok-o">:=</span>            <span class="tok-se">\</span>
+    -I.                  <span class="tok-se">\</span>
+    -std<span class="tok-o">=</span>gnu11           <span class="tok-se">\</span>
+    -ffreestanding       <span class="tok-se">\</span>
+    -fno-stack-protector <span class="tok-se">\</span>
+    -fno-pic             <span class="tok-se">\</span>
+    -mno-80387           <span class="tok-se">\</span>
+    -mno-mmx             <span class="tok-se">\</span>
+    -mno-3dnow           <span class="tok-se">\</span>
+    -mno-sse             <span class="tok-se">\</span>
+    -mno-sse2            <span class="tok-se">\</span>
+    -mno-red-zone        <span class="tok-se">\</span>
+        -mcmodel<span class="tok-o">=</span>kernel      <span class="tok-se">\</span>
         -MMD
 
-# Internal linker flags that should not be changed by the user.
-INTERNALLDFLAGS :=             \
-    -Tlinker.ld            \
-    -nostdlib              \
-    -zmax-page-size=0x1000 \
+<span class="tok-c"># Internal linker flags that should not be changed by the user.</span>
+<span class="tok-nv">INTERNALLDFLAGS</span> <span class="tok-o">:=</span>             <span class="tok-se">\</span>
+    -Tlinker.ld            <span class="tok-se">\</span>
+    -nostdlib              <span class="tok-se">\</span>
+    -zmax-page-size<span class="tok-o">=</span>0x1000 <span class="tok-se">\</span>
     -static
 
-# Use find to glob all *.c files in the directory and extract the object names.
-CFILES := $$(shell find ./ -type f -name '*.c')
-OBJ := $$(CFILES:.c=.o)
-HEADER_DEPS := $$(CFILES:.c=.d)
+<span class="tok-c"># Use find to glob all *.c files in the directory and extract the object names.</span>
+<span class="tok-nv">CFILES</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>shell find ./ -type f -name <span class="tok-s1">'*.c'</span><span class="tok-o">)</span>
+<span class="tok-nv">OBJ</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFILES:.c<span class="tok-o">=</span>.o<span class="tok-o">)</span>
+<span class="tok-nv">HEADER_DEPS</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFILES:.c<span class="tok-o">=</span>.d<span class="tok-o">)</span>
 
-# Default target.
-.PHONY: all
-all: $$(KERNEL)
+<span class="tok-c"># Default target.</span>
+<span class="tok-nf">.PHONY</span><span class="tok-o">:</span> <span class="tok-n">all</span>
+<span class="tok-nf">all</span><span class="tok-o">:</span> $<span class="tok-k">$(</span><span class="tok-nv">KERNEL</span><span class="tok-k">)</span>
 
-# Link rules for the final kernel executable.
-$$(KERNEL): $$(OBJ)
-    $$(LD) $$(OBJ) $$(LDFLAGS) $$(INTERNALLDFLAGS) -o $$@
+<span class="tok-c"># Link rules for the final kernel executable.</span>
+<span class="tok-k">$$</span><span class="tok-nf">(KERNEL)</span><span class="tok-o">:</span> $<span class="tok-k">$(</span><span class="tok-nv">OBJ</span><span class="tok-k">)</span>
+    <span class="tok-nv">$$</span><span class="tok-o">(</span>LD<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>OBJ<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>LDFLAGS<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>INTERNALLDFLAGS<span class="tok-o">)</span> -o <span class="tok-nv">$$</span>@
 
-# Compilation rules for *.c files.
--include $$(HEADER_DEPS)
-%.o: %.c
-    $$(CC) $$(CFLAGS) $$(INTERNALCFLAGS) -c $$&lt; -o $$@
+<span class="tok-c"># Compilation rules for *.c files.</span>
+<span class="tok-cp">-include $$(HEADER_DEPS)</span>
+<span class="tok-nf">%.o</span><span class="tok-o">:</span> %.<span class="tok-n">c</span>
+    <span class="tok-nv">$$</span><span class="tok-o">(</span>CC<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFLAGS<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>INTERNALCFLAGS<span class="tok-o">)</span> -c <span class="tok-nv">$$</span>&lt; -o <span class="tok-nv">$$</span>@
 
-# Remove object files and the final executable.
-.PHONY: clean
-clean:
-    rm -rf $$(KERNEL) $$(OBJ) $$(HEADER_DEPS)</code></pre>
+<span class="tok-c"># Remove object files and the final executable.</span>
+<span class="tok-nf">.PHONY</span><span class="tok-o">:</span> <span class="tok-n">clean</span>
+<span class="tok-nf">clean</span><span class="tok-o">:</span>
+    rm -rf <span class="tok-nv">$$</span><span class="tok-o">(</span>KERNEL<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>OBJ<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>HEADER_DEPS<span class="tok-o">)</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
@@ -392,17 +642,28 @@ clean:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="ini"># Timeout in seconds that Limine will use before automatically booting.
-TIMEOUT=5
+<pre class="pygments highlight"><code data-lang="ini"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><pre><span></span><span class="tok-c1"># Timeout in seconds that Limine will use before automatically booting.</span>
+<span class="tok-na">TIMEOUT</span><span class="tok-o">=</span><span class="tok-s">5</span>
 
-# The entry name that will be displayed in the boot menu
-:myOS
+<span class="tok-c1"># The entry name that will be displayed in the boot menu</span>
+<span class="tok-na">:myOS</span>
 
-# Change the protocol line depending on the used protocol.
-PROTOCOL=stivale2
+<span class="tok-c1"># Change the protocol line depending on the used protocol.</span>
+<span class="tok-na">PROTOCOL</span><span class="tok-o">=</span><span class="tok-s">stivale2</span>
 
-# Path to the kernel to boot. boot:/// represents the partition on which limine.cfg is located.
-KERNEL_PATH=boot:///myos.elf</code></pre>
+<span class="tok-c1"># Path to the kernel to boot. boot:/// represents the partition on which limine.cfg is located.</span>
+<span class="tok-na">KERNEL_PATH</span><span class="tok-o">=</span><span class="tok-s">boot:///myos.elf</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
@@ -432,28 +693,50 @@ KERNEL_PATH=boot:///myos.elf</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"># Download the latest Limine binary release.
-git clone https://github.com/limine-bootloader/limine.git --branch=v2.0-branch-binary --depth=1
+<pre class="pygments highlight"><code data-lang="sh"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><pre><span></span><span class="tok-c1"># Download the latest Limine binary release.</span>
+git clone https://github.com/limine-bootloader/limine.git --branch<span class="tok-o">=</span>v2.0-branch-binary --depth<span class="tok-o">=</span><span class="tok-m">1</span>
 
-# Build limine-install.
+<span class="tok-c1"># Build limine-install.</span>
 make -C limine
 
-# Create a directory which will be our ISO root.
+<span class="tok-c1"># Create a directory which will be our ISO root.</span>
 mkdir -p iso_root
 
-# Copy the relevant files over.
-cp -v myos.elf limine.cfg limine/limine.sys \
+<span class="tok-c1"># Copy the relevant files over.</span>
+cp -v myos.elf limine.cfg limine/limine.sys <span class="tok-se">\</span>
       limine/limine-cd.bin limine/limine-eltorito-efi.bin iso_root/
 
-# Create the bootable ISO.
-xorriso -as mkisofs -b limine-cd.bin \
-        -no-emul-boot -boot-load-size 4 -boot-info-table \
-        --efi-boot limine-eltorito-efi.bin \
-        -efi-boot-part --efi-boot-image --protective-msdos-label \
+<span class="tok-c1"># Create the bootable ISO.</span>
+xorriso -as mkisofs -b limine-cd.bin <span class="tok-se">\</span>
+        -no-emul-boot -boot-load-size <span class="tok-m">4</span> -boot-info-table <span class="tok-se">\</span>
+        --efi-boot limine-eltorito-efi.bin <span class="tok-se">\</span>
+        -efi-boot-part --efi-boot-image --protective-msdos-label <span class="tok-se">\</span>
         iso_root -o image.iso
 
-# Install Limine stage 1 and 2 for legacy BIOS boot.
-./limine/limine-install image.iso</code></pre>
+<span class="tok-c1"># Install Limine stage 1 and 2 for legacy BIOS boot.</span>
+./limine/limine-install image.iso
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
@@ -470,44 +753,82 @@ xorriso -as mkisofs -b limine-cd.bin \
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="sh"># Create an empty zeroed out 64MiB image file.
-dd if=/dev/zero bs=1M count=0 seek=64 of=image.hdd
+<pre class="pygments highlight"><code data-lang="sh"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span></pre></div></td><td class="code"><pre><span></span><span class="tok-c1"># Create an empty zeroed out 64MiB image file.</span>
+dd <span class="tok-k">if</span><span class="tok-o">=</span>/dev/zero <span class="tok-nv">bs</span><span class="tok-o">=</span>1M <span class="tok-nv">count</span><span class="tok-o">=</span><span class="tok-m">0</span> <span class="tok-nv">seek</span><span class="tok-o">=</span><span class="tok-m">64</span> <span class="tok-nv">of</span><span class="tok-o">=</span>image.hdd
 
-# Create a GPT partition table.
+<span class="tok-c1"># Create a GPT partition table.</span>
 parted -s image.hdd mklabel gpt
 
-# Create an ESP partition that spans the whole disk.
-parted -s image.hdd mkpart ESP fat32 2048s 100%
-parted -s image.hdd set 1 esp on
+<span class="tok-c1"># Create an ESP partition that spans the whole disk.</span>
+parted -s image.hdd mkpart ESP fat32 2048s <span class="tok-m">100</span>%
+parted -s image.hdd <span class="tok-nb">set</span> <span class="tok-m">1</span> esp on
 
-# Download the latest Limine binary release.
-git clone https://github.com/limine-bootloader/limine.git --branch=v2.0-branch-binary --depth=1
+<span class="tok-c1"># Download the latest Limine binary release.</span>
+git clone https://github.com/limine-bootloader/limine.git --branch<span class="tok-o">=</span>v2.0-branch-binary --depth<span class="tok-o">=</span><span class="tok-m">1</span>
 
-# Build limine-install.
+<span class="tok-c1"># Build limine-install.</span>
 make -C limine
 
-# Install the Limine BIOS stages onto the image.
+<span class="tok-c1"># Install the Limine BIOS stages onto the image.</span>
 ./limine/limine-install image.hdd
 
-# Mount the loopback device.
-USED_LOOPBACK=$$(sudo losetup -Pf --show image.hdd)
+<span class="tok-c1"># Mount the loopback device.</span>
+<span class="tok-nv">USED_LOOPBACK</span><span class="tok-o">=</span><span class="tok-nv">$$</span><span class="tok-o">(</span>sudo losetup -Pf --show image.hdd<span class="tok-o">)</span>
 
-# Format the ESP partition as FAT32.
-sudo mkfs.fat -F 32 $${USED_LOOPBACK}p1
+<span class="tok-c1"># Format the ESP partition as FAT32.</span>
+sudo mkfs.fat -F <span class="tok-m">32</span> <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>p1
 
-# Mount the partition itself.
+<span class="tok-c1"># Mount the partition itself.</span>
 mkdir -p img_mount
-sudo mount $${USED_LOOPBACK}p1 img_mount
+sudo mount <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>p1 img_mount
 
-# Copy the relevant files over.
+<span class="tok-c1"># Copy the relevant files over.</span>
 sudo mkdir -p img_mount/EFI/BOOT
 sudo cp -v myos.elf limine.cfg limine/limine.sys img_mount/
 sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 
-# Sync system cache and unmount partition and loopback device.
+<span class="tok-c1"># Sync system cache and unmount partition and loopback device.</span>
 sync
 sudo umount img_mount
-sudo losetup -d $${USED_LOOPBACK}</code></pre>
+sudo losetup -d <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>
+</pre></td></tr></table></code></pre>
 </div>
 </div>
 </div>
