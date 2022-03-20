@@ -63,7 +63,7 @@ An article’s style should only be changed when there is good reason to.</p>
 Inconsistent styling within an article might cause confusion to the
       reader, however imposing one arbitrary decision across the entire wiki
       will be cumbersome and will be of limited use.
-In addition, different topics may require different treatment.
+      In addition, different topics may require different treatment.
 </td>
 </tr>
 </table>
@@ -82,7 +82,7 @@ In addition, different topics may require different treatment.
 <div class="title">Note</div>
 </td>
 <td class="content">
-This is the first thing any reader should see
+This is the first thing any reader should see.
 </td>
 </tr>
 </table>
@@ -99,10 +99,10 @@ This is the first thing any reader should see
 <td class="content">
 A reader should be able to get a quick overview of the topic without
       reading a long text.
-A person encountering the article should be able to assess quickly, if they
-are interested in reading it further or not.
-The lead section is also the part displayed in search engines and social media
-embeds.
+      A person encountering the article should be able to assess quickly, if
+      they are interested in reading it further or not.
+      The lead section is also the part displayed in search engines and social
+      media embeds.
 </td>
 </tr>
 </table>
@@ -325,7 +325,7 @@ of that title should be linked.</p>
 </td>
 <td class="content">
 Navigation in any wiki lives from internal links.
-However, articles should not be cluttered with internal links.
+      However, articles should not be cluttered with internal links.
 </td>
 </tr>
 </table>
@@ -510,7 +510,7 @@ Do not italize or boldface nearby punctuation.</p>
 </li>
 <li>
 <p>When quoting a source, the source must be mentioned <em>in the text</em>, in
-addition to having a footnote as references.</p>
+addition to having a footnote as reference.</p>
 </li>
 <li>
 <p>Straight quotes (") and apostrophes (') should be used (no curly quotes or
@@ -711,7 +711,7 @@ a comment attributed to yourself.
 These should be in the format of <code>// TYPE(author): text</code>.
 <code>TYPE</code> should be <code>TODO</code>, <code>XXX</code>, <code>FIXME</code>, <code>NOTE</code>, etc.
 Please note that comments also tend to go stale, so their overuse is strongly
-advised against.</p>
+discouraged.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="asciidoc">// TODO(arsen): add xref validation
@@ -849,19 +849,94 @@ that you have the right to do so.</p>
 <li>
 <p>Commit messages must conform with the
 <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a>
-standard.
-However, the meaning of the types <code>feat</code> and <code>fix</code> do not apply.
-Valid types are: <code>content</code>, <code>project</code>, <code>sitegen</code>, […​].
-The type <code>fix</code> must be used when conducting a minor fix that does not change
-the content of pages.
-When using <code>fix</code>, one of the other types must be included as the scope of the
-commit message (in order to indicate what area the fix refers to).
-In addition, commits of the type <code>content</code> should only modify a single
-article.
-The scope must list all articles that have been changed in the commit of type
-<code>content</code>.
-The description of the commit must sumarize all changes; descriptions may not
-be vague (e.g. "updated bios.adoc").</p>
+standard.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The following list contains some commit types that may be used:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ci</code>: changes related to CI.</p>
+</li>
+<li>
+<p><code>deletion</code>: removal of a wiki article.</p>
+</li>
+<li>
+<p><code>expansion</code>: expansion of a wiki article.</p>
+</li>
+<li>
+<p><code>fix</code>: a minor fix that does not change the essence of the thing being
+changed (applies to all sections of the wiki).</p>
+</li>
+<li>
+<p><code>feat</code>: introduction of a new feature (does not apply to edits of wiki
+articles).</p>
+</li>
+<li>
+<p><code>generator</code>: changes to files related to site generation, other than CI.</p>
+</li>
+<li>
+<p><code>new</code>: creation of a new wiki article.</p>
+</li>
+<li>
+<p><code>ref</code>: changes to references.</p>
+</li>
+<li>
+<p><code>style</code>: changes related to code or markup style, without changing the
+meaning of the code or markup tiself.</p>
+</li>
+<li>
+<p><code>trim</code>: partial removal of content form a wiki article.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Commits should also contain a scope indicating what part of the repository
+has been changed:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>content</code>: content articles of the wiki (i.e. articles about OSDev).</p>
+</li>
+<li>
+<p><code>css</code>: CSS files in the <code>css</code> folder.</p>
+</li>
+<li>
+<p><code>generator</code>: files related to the site generator.</p>
+</li>
+<li>
+<p><code>html</code>: HTML files in the <code>html</code> folder.</p>
+</li>
+<li>
+<p><code>static</code>: assets that go in the <code>static</code> folder.</p>
+</li>
+<li>
+<p><code>meta</code>: articles in the wiki, related to rules and governances (i.e.
+articles with the category <code>Meta</code>).</p>
+</li>
+<li>
+<p><code>misc</code>: other miscalleneous files.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Commits changing articles should usually modify a single article, however
+frequent exceptions are allowed, especially for commits of the type <code>fix</code> and
+<code>style</code>.
+In case a single article is changed, the title of the article must
+be listed as the scope of the commit.
+In case multiple articles, that are all members of a certain category or tag,
+are modified, that tag or category may be modyfied.</p>
+</li>
+<li>
+<p>The description of the commit must sumarize all changes; descriptions must
+not be vague (e.g. "updated bios.adoc").</p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
