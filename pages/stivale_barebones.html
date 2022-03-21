@@ -610,27 +610,27 @@ Using the stivale2 terminal requires that the kernel maintains some state as des
     -static
 
 <span class="tok-c"># Use find to glob all *.c files in the directory and extract the object names.</span>
-<span class="tok-nv">CFILES</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>shell find ./ -type f -name <span class="tok-s1">'*.c'</span><span class="tok-o">)</span>
-<span class="tok-nv">OBJ</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFILES:.c<span class="tok-o">=</span>.o<span class="tok-o">)</span>
-<span class="tok-nv">HEADER_DEPS</span> <span class="tok-o">:=</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFILES:.c<span class="tok-o">=</span>.d<span class="tok-o">)</span>
+<span class="tok-nv">CFILES</span> <span class="tok-o">:=</span> <span class="tok-k">$(</span>shell find ./ -type f -name <span class="tok-s1">'*.c'</span><span class="tok-k">)</span>
+<span class="tok-nv">OBJ</span> <span class="tok-o">:=</span> <span class="tok-k">$(</span>CFILES:.c<span class="tok-o">=</span>.o<span class="tok-k">)</span>
+<span class="tok-nv">HEADER_DEPS</span> <span class="tok-o">:=</span> <span class="tok-k">$(</span>CFILES:.c<span class="tok-o">=</span>.d<span class="tok-k">)</span>
 
 <span class="tok-c"># Default target.</span>
 <span class="tok-nf">.PHONY</span><span class="tok-o">:</span> <span class="tok-n">all</span>
-<span class="tok-nf">all</span><span class="tok-o">:</span> $<span class="tok-k">$(</span><span class="tok-nv">KERNEL</span><span class="tok-k">)</span>
+<span class="tok-nf">all</span><span class="tok-o">:</span> <span class="tok-k">$(</span><span class="tok-nv">KERNEL</span><span class="tok-k">)</span>
 
 <span class="tok-c"># Link rules for the final kernel executable.</span>
-<span class="tok-k">$$</span><span class="tok-nf">(KERNEL)</span><span class="tok-o">:</span> $<span class="tok-k">$(</span><span class="tok-nv">OBJ</span><span class="tok-k">)</span>
-    <span class="tok-nv">$$</span><span class="tok-o">(</span>LD<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>OBJ<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>LDFLAGS<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>INTERNALLDFLAGS<span class="tok-o">)</span> -o <span class="tok-nv">$$</span>@
+<span class="tok-nf">$(KERNEL)</span><span class="tok-o">:</span> <span class="tok-k">$(</span><span class="tok-nv">OBJ</span><span class="tok-k">)</span>
+    <span class="tok-k">$(</span>LD<span class="tok-k">)</span> <span class="tok-k">$(</span>OBJ<span class="tok-k">)</span> <span class="tok-k">$(</span>LDFLAGS<span class="tok-k">)</span> <span class="tok-k">$(</span>INTERNALLDFLAGS<span class="tok-k">)</span> -o <span class="tok-nv">$@</span>
 
 <span class="tok-c"># Compilation rules for *.c files.</span>
-<span class="tok-cp">-include $$(HEADER_DEPS)</span>
+<span class="tok-cp">-include $(HEADER_DEPS)</span>
 <span class="tok-nf">%.o</span><span class="tok-o">:</span> %.<span class="tok-n">c</span>
-    <span class="tok-nv">$$</span><span class="tok-o">(</span>CC<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>CFLAGS<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>INTERNALCFLAGS<span class="tok-o">)</span> -c <span class="tok-nv">$$</span>&lt; -o <span class="tok-nv">$$</span>@
+    <span class="tok-k">$(</span>CC<span class="tok-k">)</span> <span class="tok-k">$(</span>CFLAGS<span class="tok-k">)</span> <span class="tok-k">$(</span>INTERNALCFLAGS<span class="tok-k">)</span> -c $&lt; -o <span class="tok-nv">$@</span>
 
 <span class="tok-c"># Remove object files and the final executable.</span>
 <span class="tok-nf">.PHONY</span><span class="tok-o">:</span> <span class="tok-n">clean</span>
 <span class="tok-nf">clean</span><span class="tok-o">:</span>
-    rm -rf <span class="tok-nv">$$</span><span class="tok-o">(</span>KERNEL<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>OBJ<span class="tok-o">)</span> <span class="tok-nv">$$</span><span class="tok-o">(</span>HEADER_DEPS<span class="tok-o">)</span>
+    rm -rf <span class="tok-k">$(</span>KERNEL<span class="tok-k">)</span> <span class="tok-k">$(</span>OBJ<span class="tok-k">)</span> <span class="tok-k">$(</span>HEADER_DEPS<span class="tok-k">)</span>
 </pre></td></tr></table></code></pre>
 </div>
 </div>
@@ -810,14 +810,14 @@ make -C limine
 ./limine/limine-install image.hdd
 
 <span class="tok-c1"># Mount the loopback device.</span>
-<span class="tok-nv">USED_LOOPBACK</span><span class="tok-o">=</span><span class="tok-nv">$$</span><span class="tok-o">(</span>sudo losetup -Pf --show image.hdd<span class="tok-o">)</span>
+<span class="tok-nv">USED_LOOPBACK</span><span class="tok-o">=</span><span class="tok-k">$(</span>sudo losetup -Pf --show image.hdd<span class="tok-k">)</span>
 
 <span class="tok-c1"># Format the ESP partition as FAT32.</span>
-sudo mkfs.fat -F <span class="tok-m">32</span> <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>p1
+sudo mkfs.fat -F <span class="tok-m">32</span> <span class="tok-si">${</span><span class="tok-nv">USED_LOOPBACK</span><span class="tok-si">}</span>p1
 
 <span class="tok-c1"># Mount the partition itself.</span>
 mkdir -p img_mount
-sudo mount <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>p1 img_mount
+sudo mount <span class="tok-si">${</span><span class="tok-nv">USED_LOOPBACK</span><span class="tok-si">}</span>p1 img_mount
 
 <span class="tok-c1"># Copy the relevant files over.</span>
 sudo mkdir -p img_mount/EFI/BOOT
@@ -827,7 +827,7 @@ sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 <span class="tok-c1"># Sync system cache and unmount partition and loopback device.</span>
 sync
 sudo umount img_mount
-sudo losetup -d <span class="tok-nv">$$</span><span class="tok-o">{</span>USED_LOOPBACK<span class="tok-o">}</span>
+sudo losetup -d <span class="tok-si">${</span><span class="tok-nv">USED_LOOPBACK</span><span class="tok-si">}</span>
 </pre></td></tr></table></code></pre>
 </div>
 </div>
