@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" type="text/css" href="../_/stylesheet.css">
+
+        <title>Writing a document - osdev.wiki</title>
+        
+        <meta name="keywords" content="osdev-wiki,osdev,programming,x86">
+        <meta name="description" content="An overview of how to write and submit an article">
+    </head>
+    <body>
+        <span id="roothack" href="../"></span>
+        <div id="content">
+            <svg id="logo" viewBox="0 0 747.13464 126.28621">
+                <use href="../_/static/logo.svg#g623"></use>
+            </svg>
+            <div id="navbar"><ul>
+	<li><a href="../">Main page</a></li>
+	<li><a href="../categories">Category list</a></li>
+	<li><a href="../tags">Tag list</a></li>
+</ul>
+
+<div class="stork-wrapper">
+	<input data-stork="wiki" placeholder="Search..." />
+	<div data-stork="wiki-output"></div>
+</div>
+<!-- vim: set sw=4 et : -->
+</div>
+            <div id="padding"></div>
+            <div id="toc"><ul class="sectlevel1">
+<li><a href="#_writing_the_asciidoc">1. Writing the AsciiDoc</a>
+<ul class="sectlevel2">
+<li><a href="#_references_and_bibliographies">1.1. References and bibliographies</a></li>
+<li><a href="#_things_of_note">1.2. Things of note</a></li>
+<li><a href="#_further_reading">1.3. Further reading</a></li>
+<li><a href="#_example_document">1.4. Example document</a></li>
+</ul>
+</li>
+<li><a href="#_submitting_your_changes">2. Submitting your changes</a></li>
+</ul></div>
+<article>
+<h1 class="sect0">Writing a document</h1>
+
+<div class="sect1">
+<h2 id="_writing_the_asciidoc">1. Writing the AsciiDoc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The wiki consists of documents written in AsciiDoc under the <code>pages/</code> directory
+in the source tree.
+Documents are prefaced with a nonstandard preamble containing page metadata.
+This preamble is surrounded by <code>---</code> and is a standard YAML document.
+The following fields are required:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>title</code>: The document title,</p>
+</li>
+<li>
+<p><code>tags</code>: A comma separated list of page tags (see a list of current tags on
+<a href="../tags">the tag index page</a>),</p>
+</li>
+<li>
+<p><code>category</code>: The main category of this page (see a list of current categories
+on <a href="../categories">the category index page</a>),</p>
+</li>
+<li>
+<p><code>description</code>: A brief description of the page (to show in overviews and
+OpenGraph metadata).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The convention for the names of documents on the wiki is
+<code>pages/snake_case_slug.adoc</code>.</p>
+</div>
+<div class="paragraph">
+<p>Categories are defined in a YAML-formatted category description mapping in the
+<code>categories.yaml</code> file.</p>
+</div>
+<div class="sect2">
+<h3 id="_references_and_bibliographies">1.1. References and bibliographies</h3>
+<div class="paragraph">
+<p>We use <a href="https://github.com/asciidoctor/asciidoctor-bibtex">asciidoctor-bibtex</a> to
+emit bibliographies and references on the wiki.
+If you wish to cite something, first check whether <code>sources.bib</code> in the root of
+the repository has the document you wish to cite and if it’s metadata is
+correct, if it’s not there, or it’s incorrect, please update it.</p>
+</div>
+<div class="paragraph">
+<p>When adding references to a page, please add the following to the end of the
+document in order to render its bibliography:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><pre><span></span>== Bibliography
+bibliography::[]
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_things_of_note">1.2. Things of note</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Written documents will be prefixed with their title emitted as a level zero
+heading automatically.
+Start with level one headings (<code>==</code>) when dividing up documents.</p>
+</li>
+<li>
+<p>All AsciiDoctor features <em>should</em> work.
+If there is a construct we missed and is broken, it is likely a bug in the
+generator.
+Please report it.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_further_reading">1.3. Further reading</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/">AsciiDoc manual</a></p>
+</li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/">Syntax
+Quick Reference</a></p>
+</li>
+<li>
+<p><a href="https://docs.asciidoctor.org/asciidoctor/latest/">AsciiDoctor manual</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_document">1.4. Example document</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="asciidoc"><table class="linenotable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><pre><span></span>---
+title: Lorem Ipsum
+tags: examples
+category: Examples
+description: Lorem ipsum
+---
+== Ipsum
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+deserunt mollit anim id est laborum.
+</pre></td></tr></table></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_submitting_your_changes">2. Submitting your changes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When submitting your change, please confirm it adheres to our
+<a href="#guidelines">style guidelines</a> and make commits accordingly.
+Please ensure these commits are atomic and encompass one change each.</p>
+</div>
+<div class="paragraph">
+<p>After you are done, push your changes to a fork of our source repository and
+submit a pull request.
+It will then be reviewed by our editorial team and merged if appropriate.</p>
+</div>
+<div class="paragraph">
+<p>We suggest that you enable GitHub actions on your fork and use them to ensure
+your pages look like what you intended them to.
+Our workflows will push changes to <code>gh-pages</code> on the same repository.
+You might need to create that branch, even if empty.</p>
+</div>
+</div>
+</div>
+
+</article>
+
+            <footer>
+                &copy; 2021 osdev.wiki contributors. All contents released under
+                the Creative Commons Zero license. Icons (marked with class
+                <code>bi</code>) provided by
+                <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                under the MIT license.
+                Search provided by
+                <a href="https://stork-search.net/">Stork</a> under the
+                Apache-2.0 license.
+                <a href="https://github.com/ArsenArsen/wiki/tree/main/">Source code</a>.
+            </footer>
+        </div>
+        <script src="https://files.stork-search.net/releases/v1.4.0/stork.js" integrity="sha512-aWKhPNaS3Dw47qzN1e1oxmqW0LofAvNpvrLFPb+DISgrfQPdkn5bmqaVnPyyPK5o69v9z1alQhU9yEvUcgp9Cg==" crossorigin="anonymous"></script>
+        <script src="../_/static/search.js"></script>
+    </body>
+</html>
+<!-- vim: set sw=4 et : -->
